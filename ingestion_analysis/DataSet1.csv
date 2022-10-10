@@ -1,2 +1,2 @@
-ProjectName,DataSetName,Source,NumberOfRows,NumberOfColumns,NumberOfStringCols,NumberOfCategoricalCols,NumberOfIntegerCols,NumberOfFloatCols,MissingData,Anomalies,Active
-<String>,<Name of dataset>,<URL>,<Integer>,<Integer>,<Integer>,<Integer>,<Integer>,<Integer>,<Yes or No>,<Yes or No>,<Yes or No>
+ProjectName,DataSetName,Source,NumberOfRows,NumberOfColumns,NumberOfStringCols,NumberOfCategoricalCols,NumberOfIntegerCols,NumberOfFloatCols,MissingData,Anomalies,Active,JoinStrategy
+<String>,<Name of dataset>,<URL>,<Integer>,<Integer>,<Integer>,<Integer>,<Integer>,<Integer>,<Yes or No>,<Yes or No>,<Yes or No>,<Text explaining what field or process needed to join dataset>
