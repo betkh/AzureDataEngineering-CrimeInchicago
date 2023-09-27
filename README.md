@@ -4,3 +4,5 @@
 
 ## Ingestion
 <Design documentation for ingestion goes here.  Where does the data come from?  How is it ingested?  Where is it stored (be specific)?>
+
+Note - if you came here looking for assignment instructions, go to SupplementaryInfo\CourseInstructions

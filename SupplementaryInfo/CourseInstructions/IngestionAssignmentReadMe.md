@@ -9,7 +9,7 @@ The Ingestion phase of your project is a major step towards project completion. 
 ## Data ingestion
 The minimum requirement for the project is that you programmatically access your data and upload it to the cloud.  This can be done using your local computer as was done in the ingestion assigmment.  The general idea is that you should be able to refresh your dataset by simply re-running your local script.
 
-Data cleaning and transformation is not a priority for this phase as having the data in raw form is a good practice.  That said, doing basic transformations to get the data into an appropriate structure for the next step makes sense.  For example, converting JSON data to CSV after an API call is reasonable in this phase.
+Data cleaning and transformation is not a priority for this phase as having the data in raw form is a good practice.  That said, doing basic transformations to get the data into an appropriate structure for the next step makes sense.  For example, converting JSON data to CSV after an API call is reasonable in this phase.  If you are web scraping, converting the data to a Pandas dataframe and doing basic data conversion is also appropriate.
 
 To complete this section using your local computer, add code to DataSet1.py and DataSet2.py in src\ingestion for your datasets. The last step in each of these code files should be an upload to ADLS.  As part of the Ingestion phase, you should create a new storage account with a folder layout that is appropriate for your project.
 
@@ -22,13 +22,13 @@ You are welcome to use a cloud approach if that is a priority for you for the pr
 - Azure storage - A screen shot showing the successful upload of your data into Azure storage should be put in the ingestion_analysis folder.  As noted above, a new storage account for your project is expected along with an organization that makes sense for your design.
 
 ## Exploratory data analysis
-Understanding the nuances of your datasets is essential for your next step of transformations.  Knowing the size of the dataset will drive the compute choice.  Understanding the data types of tabular data columns will determine what you need to do to transform the data into proper numeric, date, or other structures.  Looking at the distribution of values will determine if you have outliers and need to do some form or anamoly detection.  Some columns may have significant missing data and you will need a strategy for dealing with these.
+Understanding the nuances of your datasets is essential for your next step of transformations.  Knowing the size of the dataset will drive the compute choice.  Understanding the data types of tabular data columns will determine what you need to do to transform the data into proper numeric, date, or other structures.  Looking at the distribution of values will determine if you have outliers and need to do some form of anamoly detection.  Some columns may have significant missing data and you will need a strategy for dealing with these.
 
 In src\ingestion\ExploratoryAnalysis.py, write some code that explores your datasets.  A library like pandas_profiling can be very helpful for this, but that has scale limitations and may not be the best choice.  This code may need to run on Databricks if the data is very large.
 
 When complete, write a summary document about your data and place it in the ingestion_analysis folder.  The exact type of document is up to you, but having some graphics and tables to summarize the data will be helpful for the reader.
 
-Alternatively, you can use a large language model to analyze your data.  There are tutorials available online that walk you through how to use a tool like ChatGPT for data analysis.  In this case, capture your session via screenshots or export.
+Alternatively, you can use a large language model to analyze your data.  There are tutorials available online that walk you through how to use a tool like ChatGPT for data analysis.  In this case, capture your session via screenshots or export the session.
 
 ### Evidence and grading
 - Summary description -  a document in the ingestion_analysis folder that provides information about the datasets.  
