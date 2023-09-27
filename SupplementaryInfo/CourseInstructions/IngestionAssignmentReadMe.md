@@ -26,12 +26,12 @@ Understanding the nuances of your datasets is essential for your next step of tr
 
 In src\ingestion\ExploratoryAnalysis.py, write some code that explores your datasets.  A library like pandas_profiling can be very helpful for this, but that has scale limitations and may not be the best choice.  This code may need to run on Databricks if the data is very large.
 
-When complete, write a summary document about your data and place it in the ingestion_analysis folder.  The exact type of document is up to you, but having some graphics and tables to summarize the data will be helpful for the reader.
+When complete, write a summary document about your data and place it in the SupplementaryInfo\IngestionAnalysis  folder.  The exact type of document is up to you, but having some graphics and tables to summarize the data will be helpful for the reader.
 
 Alternatively, you can use a large language model to analyze your data.  There are tutorials available online that walk you through how to use a tool like ChatGPT for data analysis.  In this case, capture your session via screenshots or export the session.
 
 ### Evidence and grading
-- Summary description -  a document in the ingestion_analysis folder that provides information about the datasets.  
+- Summary description -  a document in the SupplementaryInfo\IngestionAnalysis folder that provides information about the datasets.  
 - Code - Python code or similar in src\ingestion (ExploratoryAnalysis.py is the default) that you used to create the information in your document.
 
 ## Project documentation
