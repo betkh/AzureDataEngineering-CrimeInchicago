@@ -17,6 +17,8 @@ Allowing you to do this on a local computer is a short cut.  In a fully develope
 
 You are welcome to use a cloud approach if that is a priority for you for the project.  Doing so successfully will earn high marks on the assignment, including the possibility of extra credit.  If you do so, the structure of the Ingestion portion of the repo will need to align with your cloud approach and not with the expected local computer approach outlined here.  Please keep the structure of src\ingestion, but re-shape the repo as needed from there.
 
+An exception to the above is that the expectation for a group project is a cloud approach. 
+
 ### Evidence and grading
 - Code - your code should be well written and easy to read.  No extra commented out code should exist.  Appropriate data and control structures should be used.   The code should be in the src\ingestion folder.
 - Azure storage - A screen shot showing the successful upload of your data into Azure storage should be put in the ingestion_analysis folder.  As noted above, a new storage account for your project is expected along with an organization that makes sense for your design.
@@ -28,7 +30,7 @@ In src\ingestion\ExploratoryAnalysis.py, write some code that explores your data
 
 When complete, write a summary document about your data and place it in the SupplementaryInfo\IngestionAnalysis  folder.  The exact type of document is up to you, but having some graphics and tables to summarize the data will be helpful for the reader.
 
-Alternatively, you can use a large language model to analyze your data.  There are tutorials available online that walk you through how to use a tool like ChatGPT for data analysis.  In this case, capture your session via screenshots or export the session.
+Alternatively, you can use a large language model to analyze your data.  There are tutorials available online that walk you through how to use a tool like ChatGPT for data analysis.  In this case, capture your session via screenshots or export the session.  A summary describing the results of your analysis is still required.
 
 ### Evidence and grading
 - Summary description -  a document in the SupplementaryInfo\IngestionAnalysis folder that provides information about the datasets.  
