@@ -1,9 +1,131 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=16374176&assignment_repo_type=AssignmentRepo)
-# CSCI 422 Project - <YourName>
 
-<Tell the world about your project in this readme.  There should be sections that align with the data engineering lifecyle - Ingestion, Transformation, Serving - that serve as the design documentation.  >
+# CSCI 622 - Data Engineering Project: Insights for Chicago to Improve Public Safety
 
-## Ingestion
-<Design documentation for ingestion goes here.  Where does the data come from?  How is it ingested?  Where is it stored (be specific)?>
+This project aims to support data-driven public safety initiatives for Chicago. Using 3 separate public data sets from [Data.gov](https://www.data.gov/), the project ingests, transforms, and analizes data to unlock insights to improve public safety. The project design follows the Data Engineering lifecycle, with clear documentation of each phase: **Ingestion**, **Transformation**, and **Serving (Analysis)**.
 
-Note - if you came here looking for assignment instructions, go to SupplementaryInfo\CourseInstructions
+---
+
+## STEP-1: Ingestion
+
+### Three Data Sources
+
+This project uses three datasets from [Data.gov](https://www.data.gov/), each of which provides valuable information to support analysis and unlock insights to improve public safety in Chicago.
+
+##
+
+**Source #1: Crimes - 2001 to Present**
+
+- **Dataset URL**: [Crimes - 2001 to Present](https://catalog.data.gov/dataset/crimes-2001-to-present)
+- **Landing Page**: [Crimes Dataset Overview](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data)
+- **API Endpoint**: [`https://data.cityofchicago.org/resource/ijzp-q8t2.json`](https://data.cityofchicago.org/resource/ijzp-q8t2.json)
+- **API Documentation**: [API Documentation for Crimes Dataset](https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2)
+- **Data Owner**: Chicago Police Department
+- **Date Created**: September 30, 2011
+- **Data Update Frequency**: Daily
+- **Facts:**
+  - **Views**: `1.01M`
+  - **Downloads**: `743K`
+  - **Columns**: `22`
+  - **Rows**: `8.19M`
+    - each row represents a reported crime, anonymized to the block level.
+
+##
+
+**Source #2: Arrests**
+
+- **Dataset URL**: [Arrests](https://catalog.data.gov/dataset/arrests)
+- **Landing Page**: [Arrests Dataset Overview](https://data.cityofchicago.org/Public-Safety/Arrests/dpt3-jri9/about_data)
+- **API Endpoint**: [`https://data.cityofchicago.org/resource/dpt3-jri9.json`](https://data.cityofchicago.org/resource/dpt3-jri9.json)
+- **API Documentation**: [API Documentation for Arrests Dataset](https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9)
+- **Data Owner**: Chicago Police Department
+- **Date Created**: June 22, 2020
+- **Data Update Frequency**: Daily
+- **Facts**:
+  - **Views**: `113K`
+  - **Downloads**: `24.6K`
+  - **Columns**: `24`
+  - **Rows**: `660K`
+    - Each row represents an arrest, anonymized to the block level.
+
+##
+
+**Source #3: Socioeconomically Disadvantaged Areas**
+
+- **Dataset URL**: [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)
+- **Landing Page**: [Disadvantaged Areas Dataset Overview](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data)
+- **API Endpoint**: [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)
+- **API Documentation**: [API Documentation for Disadvantaged Areas Dataset](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8)
+- **Data Owner**: Department of Planning and Development
+- **Date Created**: October 13, 2022
+- **Last Update**: July 12, 2024
+- **Data Update Frequency**: N/A
+- **Facts**:
+  - **Views**: `4.5K`
+  - **Downloads**: `1.5K`
+  - **Columns**: `1`
+  - **Rows**: `254K`
+
+##
+
+### Ingestion Steps
+
+Each dataset is ingested and stored in Azure Blob Storage in `.csv` format, where it is subsequently cleaned, enriched, and transformed for analysis and reporting.
+
+1. **Sign Up and API Key Creation**
+
+   - Register on Data.gov and create new API Keys using the "SignUpforAppToken" option.
+   - **Security:** store the api key in config file and avoid .
+
+   ![Screenshot 1](link.png)
+
+   ![Screenshot 2](link.png)
+
+   ![Screenshot 3](link.png)
+
+2. **Data Retrieval via API**
+
+   - Pull data by via the Data.gov API, passing in the API Key ID and Secret for secure access.
+   - **Libraries Required:** Install `pandas`, `soapy`, `jupyter`, and `azure-storage-file-datalake`.
+
+3. **Programmatic Storage**
+
+   - create a Directory within a Container in Azure Blob Storage programmatically.
+   - Store datasets in `.csv` format for easy access for next step.
+
+---
+
+## STEP-2: Transformation
+
+### Transformation Steps
+
+1. **Data Cleaning and Preprocessing**
+
+   - data modeling
+   - handling missing values
+   - standardizing formats (e.g. Date formats)
+   - filtering data to match specific criteria for analysis.
+
+2. **Enrich Data**
+
+   - Enrich crime data by merging with census and socioeconomic data
+   - provides contextual insights such as crime trends in relation to socioeconomic factors.
+
+3. **Data formats `.parquet` format**
+   - `.parquet` suitable data format optimized for analytics.
+   - `.csv` suitable for distribution
+
+---
+
+## STEP-3: Serving - Analysis Exploratory Data Analysis (EDA)
+
+- SQL-based transformations
+- exploratory data analysis (EDA)
+
+#### Guiding Questions for Analysis
+
+Key insights derived from the project aim to highlight:
+
+- Areas with high crime rates relative to socioeconomic factors.
+- Monthly and annual crime trends.
+- High-risk neighborhoods to inform public safety improvements.
