@@ -1,6 +1,8 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=16374176&assignment_repo_type=AssignmentRepo)
 
-# CSCI 622 - Data Engineering Project: Insights for Chicago to Improve Public Safety
+##### CS622 - Data Engineering Project
+
+## Insights for Chicago to Improve Public Safety
 
 This project aims to support data-driven public safety initiatives for Chicago. Using 3 separate public data sets from [Data.gov](https://www.data.gov/), the project ingests, transforms, and analizes data to unlock insights to improve public safety. The project design follows the Data Engineering lifecycle, with clear documentation of each phase: **Ingestion**, **Transformation**, and **Serving (Analysis)**.
 
