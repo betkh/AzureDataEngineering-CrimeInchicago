@@ -12,61 +12,48 @@ This project aims to support data-driven public safety initiatives for Chicago. 
 
 This project uses three datasets from [Data.gov](https://www.data.gov/), each of which provides valuable information to support analysis and unlock insights to improve public safety in Chicago.
 
-##
+### Source #1: Crimes - 2001 to Present
 
-**Source #1: Crimes - 2001 to Present**
+| Attribute                 | Details                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Dataset URL**           | [Crimes - 2001 to Present](https://catalog.data.gov/dataset/crimes-2001-to-present)                                                                                                    |
+| **About Data**            | [`https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data`](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data) |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/ijzp-q8t2.json`](https://data.cityofchicago.org/resource/ijzp-q8t2.json)                                                                     |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2`](https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2)                                                 |
+| **Data Owner**            | Chicago Police Department                                                                                                                                                              |
+| **Date Created**          | September 30, 2011                                                                                                                                                                     |
+| **Data Update Frequency** | `Daily`                                                                                                                                                                                |
+| **Rows**                  | `8.19M` (each row represents a reported crime, anonymized to the block level)                                                                                                          |
+| **Columns**               | `22`                                                                                                                                                                                   |
 
-- **Dataset URL**: [Crimes - 2001 to Present](https://catalog.data.gov/dataset/crimes-2001-to-present)
-- **Landing Page**: [Crimes Dataset Overview](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data)
-- **API Endpoint**: [`https://data.cityofchicago.org/resource/ijzp-q8t2.json`](https://data.cityofchicago.org/resource/ijzp-q8t2.json)
-- **API Documentation**: [API Documentation for Crimes Dataset](https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2)
-- **Data Owner**: Chicago Police Department
-- **Date Created**: September 30, 2011
-- **Data Update Frequency**: Daily
-- **Facts:**
-  - **Views**: `1.01M`
-  - **Downloads**: `743K`
-  - **Columns**: `22`
-  - **Rows**: `8.19M`
-    - each row represents a reported crime, anonymized to the block level.
+### Source #2: Arrests
 
-##
+| Attribute                 | Details                                                                                                                                                  |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Dataset URL**           | [Arrests](https://catalog.data.gov/dataset/arrests)                                                                                                      |
+| **About Data**            | [`https://data.cityofchicago.org/Public-Safety/Arrests/dpt3-jri9/about_data`](https://data.cityofchicago.org/Public-Safety/Arrests/dpt3-jri9/about_data) |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/dpt3-jri9.json`](https://data.cityofchicago.org/resource/dpt3-jri9.json)                                       |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9`](https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9)                   |
+| **Data Owner**            | Chicago Police Department                                                                                                                                |
+| **Date Created**          | June 22, 2020                                                                                                                                            |
+| **Data Update Frequency** | Daily                                                                                                                                                    |
+| **Rows**                  | `660K` (each row represents an arrest, anonymized to the block level)                                                                                    |
+| **Columns**               | `24`                                                                                                                                                     |
 
-**Source #2: Arrests**
+### Source #3: Socioeconomically Disadvantaged Areas
 
-- **Dataset URL**: [Arrests](https://catalog.data.gov/dataset/arrests)
-- **Landing Page**: [Arrests Dataset Overview](https://data.cityofchicago.org/Public-Safety/Arrests/dpt3-jri9/about_data)
-- **API Endpoint**: [`https://data.cityofchicago.org/resource/dpt3-jri9.json`](https://data.cityofchicago.org/resource/dpt3-jri9.json)
-- **API Documentation**: [API Documentation for Arrests Dataset](https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9)
-- **Data Owner**: Chicago Police Department
-- **Date Created**: June 22, 2020
-- **Data Update Frequency**: Daily
-- **Facts**:
-  - **Views**: `113K`
-  - **Downloads**: `24.6K`
-  - **Columns**: `24`
-  - **Rows**: `660K`
-    - Each row represents an arrest, anonymized to the block level.
-
-##
-
-**Source #3: Socioeconomically Disadvantaged Areas**
-
-- **Dataset URL**: [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)
-- **Landing Page**: [Disadvantaged Areas Dataset Overview](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data)
-- **API Endpoint**: [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)
-- **API Documentation**: [API Documentation for Disadvantaged Areas Dataset](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8)
-- **Data Owner**: Department of Planning and Development
-- **Date Created**: October 13, 2022
-- **Last Update**: July 12, 2024
-- **Data Update Frequency**: N/A
-- **Facts**:
-  - **Views**: `4.5K`
-  - **Downloads**: `1.5K`
-  - **Columns**: `1`
-  - **Rows**: `254K`
-
-##
+| Property                  | Details                                                                                                                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Dataset URL**           | [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)                                                                                                                                        |
+| **About Data**            | [`https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data`](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data) |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)                                                                                                                                     |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8`](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8)                                                                                                                 |
+| **Data Owner**            | Department of Planning and Development                                                                                                                                                                                                                 |
+| **Date Created**          | October 13, 2022                                                                                                                                                                                                                                       |
+| **Last Update**           | July 12, 2024                                                                                                                                                                                                                                          |
+| **Data Update Frequency** | N/A                                                                                                                                                                                                                                                    |
+| **Rows**                  | 254K                                                                                                                                                                                                                                                   |
+| **Columns**               | 1                                                                                                                                                                                                                                                      |
 
 ### Ingestion Steps
 
