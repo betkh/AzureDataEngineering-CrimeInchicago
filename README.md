@@ -44,18 +44,18 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 
 ### Source #3: Socioeconomically Disadvantaged Areas
 
-| Property                  | Details                                                                                                                                                                                                                                                |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Dataset URL**           | [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)                                                                                                                                        |
-| **About Data**            | [`https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data`](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data) |
-| **API Endpoint**          | [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)                                                                                                                                     |
-| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8`](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8)                                                                                                                 |
-| **Data Owner**            | Department of Planning and Development                                                                                                                                                                                                                 |
-| **Date Created**          | October 13, 2022                                                                                                                                                                                                                                       |
-| **Last Update**           | July 12, 2024                                                                                                                                                                                                                                          |
-| **Data Update Frequency** | N/A                                                                                                                                                                                                                                                    |
-| **Rows**                  | 254K                                                                                                                                                                                                                                                   |
-| **Columns**               | 1                                                                                                                                                                                                                                                      |
+| Property                  | Details                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **Dataset URL**           | [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)                        |
+| **About Data**            | [About Data](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data) |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)                     |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8`](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8) |
+| **Data Owner**            | Department of Planning and Development                                                                                                 |
+| **Date Created**          | October 13, 2022                                                                                                                       |
+| **Last Update**           | July 12, 2024                                                                                                                          |
+| **Data Update Frequency** | N/A                                                                                                                                    |
+| **Rows**                  | 254K                                                                                                                                   |
+| **Columns**               | 1                                                                                                                                      |
 
 ### Ingestion Steps
 
@@ -67,10 +67,6 @@ Each dataset is ingested and stored in Azure Blob Storage in `.csv` format, wher
    - **Security:** store the api key in config file and avoid .
 
    ![Screenshot 1](link.png)
-
-   ![Screenshot 2](link.png)
-
-   ![Screenshot 3](link.png)
 
 2. **Data Retrieval via API**
 
