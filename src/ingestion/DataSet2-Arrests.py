@@ -1,7 +1,7 @@
 import configparser
 from functions.pull_data import fetch_data_from_api
 from functions.timeLabels import create_file_label_from_dates
-from functions.upload_AZDB_2 import init_storage_acct, upload_dataframe_to_adls
+from ingestion.functions.upload_ADLs import init_storage_acct, upload_dataframe_to_adls
 
 # DataSet1.py - script to extract data from its source and load into ADLS.
 
@@ -9,11 +9,6 @@ from functions.upload_AZDB_2 import init_storage_acct, upload_dataframe_to_adls
 Ingest dynamic data sets to ADLS
 
 Source #2: "Arrests "
-
-    - About Data	https://data.cityofchicago.org/Public-Safety/Arrests/dpt3-jri9/about_data
-    - API Endpoint	https://data.cityofchicago.org/resource/dpt3-jri9.json
-    - API Documentation	https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9
-
 
     - Dataset URL	Arrests
     - About Data	https://data.cityofchicago.org/Public-Safety/Arrests/dpt3-jri9/about_data

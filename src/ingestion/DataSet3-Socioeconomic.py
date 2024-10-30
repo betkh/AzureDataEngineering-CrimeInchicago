@@ -1,7 +1,7 @@
 import configparser
 from functions.pull_data import fetch_data_from_api
 from functions.timeLabels import create_file_label_geo
-from functions.upload_AZDB_2 import init_storage_acct, upload_dataframe_to_adls
+from ingestion.functions.upload_ADLs import init_storage_acct, upload_dataframe_to_adls
 
 # DataSet1.py - script to extract data from its source and load into ADLS.
 
@@ -17,7 +17,7 @@ Source #3: Socioeconomically Disadvantaged Areas
     - Last Update	July 12, 2024
     - Data Update Frequency	N/A
     - Rows:	254K
-    - Columns:1
+    - Columns: 1
     - 254K rows x 1 column
 """
 

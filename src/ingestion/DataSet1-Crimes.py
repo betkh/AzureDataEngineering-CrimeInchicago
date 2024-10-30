@@ -1,7 +1,7 @@
 import configparser
 from functions.pull_data import fetch_data_from_api
 from functions.timeLabels import create_file_label_from_dates
-from functions.upload_AZDB_2 import init_storage_acct, upload_dataframe_to_adls
+from ingestion.functions.upload_ADLs import init_storage_acct, upload_dataframe_to_adls
 
 # DataSet1.py - script to extract data from its source and load into ADLS.
 
@@ -18,7 +18,6 @@ Source #1: "Crimes - 2001 to Present"
     - Data Update:  Frequency	Daily
     - Rows: 8.19M (each row represents a reported crime, anonymized to the block level)
     - Columns: 22
-
     - data is too big 8.1M records X 22 columns, pulled only subset of rows and columns (year after 2020 and other filters)
 """
 
