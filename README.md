@@ -14,7 +14,7 @@ This project aims to support data-driven public safety initiatives for Chicago. 
 
 This project uses three datasets from [Data.gov](https://www.data.gov/), each of which provides valuable information to support analysis and unlock insights to improve public safety in Chicago.
 
-### Source #1: Crimes - 2001 to Present
+### Source #1: Crimes - 2001 to Present - Dynamic data
 
 | Attribute                 | Details                                                                                                                                                                                |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -23,12 +23,12 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **API Endpoint**          | [`https://data.cityofchicago.org/resource/ijzp-q8t2.json`](https://data.cityofchicago.org/resource/ijzp-q8t2.json)                                                                     |
 | **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2`](https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2)                                                 |
 | **Data Owner**            | Chicago Police Department                                                                                                                                                              |
-| **Date Created**          | September 30, 2011                                                                                                                                                                     |
+| **Date Created**          | `September 30, 2011`                                                                                                                                                                   |
 | **Data Update Frequency** | `Daily`                                                                                                                                                                                |
 | **Rows**                  | `8.19M` (each row represents a reported crime, anonymized to the block level)                                                                                                          |
 | **Columns**               | `22`                                                                                                                                                                                   |
 
-### Source #2: Arrests
+### Source #2: Arrests - Dynamic data
 
 | Attribute                 | Details                                                                                                                                                  |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,8 +37,8 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **API Endpoint**          | [`https://data.cityofchicago.org/resource/dpt3-jri9.json`](https://data.cityofchicago.org/resource/dpt3-jri9.json)                                       |
 | **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9`](https://dev.socrata.com/foundry/data.cityofchicago.org/dpt3-jri9)                   |
 | **Data Owner**            | Chicago Police Department                                                                                                                                |
-| **Date Created**          | June 22, 2020                                                                                                                                            |
-| **Data Update Frequency** | Daily                                                                                                                                                    |
+| **Date Created**          | `June 22, 2020`                                                                                                                                          |
+| **Data Update Frequency** | `Daily`                                                                                                                                                  |
 | **Rows**                  | `660K` (each row represents an arrest, anonymized to the block level)                                                                                    |
 | **Columns**               | `24`                                                                                                                                                     |
 
@@ -51,11 +51,11 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **API Endpoint**          | [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)                     |
 | **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8`](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8) |
 | **Data Owner**            | Department of Planning and Development                                                                                                 |
-| **Date Created**          | October 13, 2022                                                                                                                       |
-| **Last Update**           | July 12, 2024                                                                                                                          |
-| **Data Update Frequency** | N/A                                                                                                                                    |
-| **Rows**                  | 254K                                                                                                                                   |
-| **Columns**               | 1                                                                                                                                      |
+| **Date Created**          | `October 13, 2022`                                                                                                                     |
+| **Last Update**           | `July 12, 2024`                                                                                                                        |
+| **Data Update Frequency** | `N/A`                                                                                                                                  |
+| **Rows**                  | `254K`                                                                                                                                 |
+| **Columns**               | `1`                                                                                                                                    |
 
 ### Ingestion Steps
 
@@ -64,13 +64,13 @@ Each dataset is ingested and stored in Azure Blob Storage in `.csv` format, wher
 1. **Sign Up and API Key Creation**
 
    - Register on Data.gov and create new API Keys using the "SignUpforAppToken" option.
-   - **Security:** store the api key in config file and avoid .
+   - **Security:** store the api key in config file.
 
    ![Screenshot 1](link.png)
 
 2. **Data Retrieval via API**
 
-   - Pull data by via the Data.gov API, passing in the API Key ID and Secret for secure access.
+   - Pull data via the Data.gov API.
    - **Libraries Required:** Install `pandas`, `soapy`, `jupyter`, and `azure-storage-file-datalake`.
 
 3. **Programmatic Storage**
