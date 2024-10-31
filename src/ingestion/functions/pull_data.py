@@ -40,8 +40,8 @@ def fetch_data_from_api(url, api_key_id, api_secret, columns=None, row_filter=No
                 pbar.update(len(records_to_add))
                 offset += limit
             else:
-                raise Exception(f"Failed to retrieve data: {
-                                response.status_code}")
+                raise Exception(
+                    f"Failed to retrieve data: {response.status_code}")
 
     df = pd.DataFrame(all_data)
     print(f"Total records fetched: {len(df)}")

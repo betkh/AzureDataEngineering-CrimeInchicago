@@ -1,7 +1,7 @@
 import configparser
 from functions.pull_data import fetch_data_from_api
 from functions.timeLabels import create_file_label_geo
-from ingestion.functions.upload_ADLs import init_storage_acct, upload_dataframe_to_adls
+from functions.upload_ADLs import init_storage_acct, upload_dataframe_to_adls
 
 # DataSet1.py - script to extract data from its source and load into ADLS.
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     url = "https://data.cityofchicago.org/resource/2ui7-wiq8.json"
 
-    df = fetch_data_from_api(url, api_key_id, api_secret, max_records=500000)
+    df = fetch_data_from_api(url, api_key_id, api_secret, max_records=50)
 
     print("[Success] - Data fetch from API successful and data stored in df")
     print("\nData insights:")
@@ -56,7 +56,9 @@ if __name__ == "__main__":
     # Initialize Azure Data Lake storage client
     with open("sas.config") as f:
         sas_key = f.readline().strip()
-    dLake_serv_client = init_storage_acct("assign1storebekalue", sas_key)
+
+    # storageAcctName = "crimeinchicago"
+    dLake_serv_client = init_storage_acct("crimeinchicago", sas_key)
 
     # Define the file system and directory names
     fsName = "data-engineering-project"
