@@ -9,6 +9,7 @@ sodapy = "*"
 jupyter = "*"
 azure-storage-file-datalake = "*"
 tqdm = "*"
+numpy = "*"
 
 [dev-packages]
 
