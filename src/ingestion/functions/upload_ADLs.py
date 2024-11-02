@@ -22,4 +22,4 @@ def upload_dataframe_to_adls(directory_client, df, remote_file_name):
 
     # Upload the CSV data
     file_client.upload_data(csv_data, overwrite=True)
-    print(f"DataFrame uploaded as '{remote_file_name}' successfully.")
+    print(f"[Success] - '{remote_file_name}' uploaded to ADLS successfully.")

@@ -1,3 +1,4 @@
+import time
 import requests
 import pandas as pd
 from tqdm import tqdm
@@ -7,7 +8,7 @@ from tqdm import tqdm
 # API doc https://dev.socrata.com/consumers/getting-started
 
 
-def fetch_data_from_api(url, api_key_id, api_secret, columns=None, row_filter=None, max_records=100000):
+def fetch_data_from_api(url, api_key_id, api_secret, columns=None, row_filter=None, max_records=100000, timeout=10, delay=1):
     """Fetch data from the specified API with selected columns and row filter."""
     headers = {
         "X-Api-Key-Id": api_key_id,
@@ -30,18 +31,31 @@ def fetch_data_from_api(url, api_key_id, api_secret, columns=None, row_filter=No
                 "$where": row_filter
             }
 
-            response = requests.get(url, headers=headers, params=params)
-            if response.status_code == 200:
-                data = response.json()
-                if not data:
-                    break  # Stop if no data is returned
-                records_to_add = data[:max_records - len(all_data)]
-                all_data.extend(records_to_add)
-                pbar.update(len(records_to_add))
-                offset += limit
-            else:
-                raise Exception(
-                    f"Failed to retrieve data: {response.status_code}")
+            try:
+                response = requests.get(
+                    url, headers=headers, params=params, timeout=timeout)
+                if response.status_code == 200:
+                    data = response.json()
+                    if not data:
+                        break  # Stop if no data is returned
+                    records_to_add = data[:max_records - len(all_data)]
+                    all_data.extend(records_to_add)
+                    pbar.update(len(records_to_add))
+                    offset += limit
+                else:
+                    raise Exception(
+                        f"Failed to retrieve data: {response.status_code}")
+
+                # Delay between requests to prevent overwhelming the server
+                time.sleep(delay)
+
+            except requests.exceptions.Timeout:
+                print(
+                    f"Request timed out after {timeout} seconds. Retrying with backoff...")
+                time.sleep(delay * 2)  # Exponential backoff
+            except requests.exceptions.RequestException as e:
+                print(f"An error occurred: {e}")
+                break
 
     df = pd.DataFrame(all_data)
     print(f"Total records fetched: {len(df)}")
