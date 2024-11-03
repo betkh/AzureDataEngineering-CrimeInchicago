@@ -10,6 +10,11 @@ jupyter = "*"
 azure-storage-file-datalake = "*"
 tqdm = "*"
 numpy = "*"
+seaborn = "*"
+plotly = "*"
+folium = "*"
+geopandas = "*"
+matplotlib = "*"
 
 [dev-packages]
 
