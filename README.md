@@ -30,7 +30,9 @@ pip install --user pipenv
 
 ```
 
-**Pienv Documentation Link:** [pipenv documentation](https://pipenv.pypa.io/en/latest/)
+**Pienv Documentation Link:**
+
+- [pipenv documentation](https://pipenv.pypa.io/en/latest/)
 
 ### Part-II: Azure Cloud setup
 
@@ -98,8 +100,6 @@ Each dataset is ingested and stored in Azure Blob Storage in `.csv` format, wher
 
    - Register on Data.gov and create new API Keys using the "SignUpforAppToken" option.
    - **Security:** store the api key in config file.
-
-   ![Screenshot 1](link.png)
 
 2. **Data Retrieval via API**
 
