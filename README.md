@@ -147,3 +147,7 @@ Key insights derived from the project aim to highlight:
 - Areas with high crime rates relative to socioeconomic factors.
 - Monthly and annual crime trends.
 - High-risk neighborhoods to inform public safety improvements.
+
+![High Crime Districts](viz1.png)
+![Top10 Crime Types](viz2.png)
+![TemporalAnalysis_arrestsOver_5years](viz3.png)
