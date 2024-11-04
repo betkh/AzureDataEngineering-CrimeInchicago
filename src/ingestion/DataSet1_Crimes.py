@@ -21,7 +21,6 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
     Ingests the 'Crimes' dataset and uploads to Azure Data Lake Storage (ADLS).
 
     About Data:
-
     Source #1: "Crimes - 2001 to Present" - (DYNAMIC source)
 
         - About Data:	https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data
@@ -69,16 +68,16 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
     print(f"Number of columns: {len(df.columns)}")
     print(f"Number of rows: {len(df)}")
 
-    # Generate label based on the date range
+    # Generate file label based on the date range
     csv_file_label = create_file_label_from_dates(df, "date", "Crimes")
     print("\n[Success] - Generated file label:", csv_file_label)
 
-    # save data
+    # save data as csv
     df_read = save_and_load_csv(df,
                                 SAVE_PATH,
                                 csv_file_label)
 
-    # Initialize Azure Data Lake storage client
+    # Init Azure Data Lake storage client
     with open("sas.config") as f:
         sas_key = f.readline().strip()
 
@@ -91,9 +90,12 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
                                     fileSysName,
                                     dirName)
 
-    # Upload the DataFrame to ADLS
+    # Upload to ADLS
     upload_dataframe_to_adls(directory, df_read, csv_file_label)
 
 
+# Allow this script to be run independently or imported
 if __name__ == "__main__":
-    ingest_crimes_data()
+    ingest_crimes_data(MAX_RECORDS=205000,
+                       DELAY=2,
+                       TIME_OUT=20)
