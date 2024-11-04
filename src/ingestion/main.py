@@ -27,4 +27,4 @@ def start(delay_=1.5,
 
 if __name__ == "__main__":
 
-    start(delay_=1.5, time_Out_=15, max_rec_=2000)
+    start(delay_=2, time_Out_=20, max_rec_=205000)
