@@ -20,14 +20,12 @@ The project design follows the Data Engineering lifecycle, with clear documentat
 
 ```
 pip install --user pipenv
-
 ```
 
 **Activate Pipenv**:
 
 ```
   pipenv shell
-
 ```
 
 **Pienv Documentation Link:**
@@ -148,6 +146,8 @@ Key insights derived from the project aim to highlight:
 - Monthly and annual crime trends.
 - High-risk neighborhoods to inform public safety improvements.
 
-![High Crime Districts](viz1.png)
-![Top10 Crime Types](viz2.png)
-![TemporalAnalysis_arrestsOver_5years](viz3.png)
+### Preliminary Analysis Results
+
+<img src="viz1.png" alt="High Crime Districts" height="250">
+<img src="viz2.png" alt="Top10 Crime Types" height="250">
+<img src="viz3.png" alt="TemporalAnalysis_arrestsOver_5years" width="595">
