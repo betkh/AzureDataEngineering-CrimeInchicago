@@ -1,6 +1,7 @@
-from DataSet3_Socioeconomic import ingest_socioecon_areas_data
-from DataSet2_Arrests import ingest_Arrests_Data
 from DataSet1_Crimes import ingest_crimes_data
+from DataSet2_Arrests import ingest_Arrests_Data
+from DataSet3_Socioeconomic import ingest_socioecon_areas_data
+from DataSet4_socioecon_Indicators import ingest_socioecon_indicators_data
 
 
 def start(delay_=1.5,
@@ -24,7 +25,13 @@ def start(delay_=1.5,
                                 TIME_OUT=time_Out_,
                                 SAVE_PATH='RawData/DataSet3')
 
+    ingest_socioecon_indicators_data(END_POINT="kn9c-c2s2.json",
+                                     MAX_RECORDS=max_rec_,
+                                     TIME_OUT=time_Out_,
+                                     SAVE_PATH='RawData/DataSet3'
+                                     )
+
 
 if __name__ == "__main__":
 
-    start(delay_=2, time_Out_=20, max_rec_=205000)
+    start(delay_=2, time_Out_=20, max_rec_=10)
