@@ -5,30 +5,30 @@ from functions.timeLabels import crimes_fileLabel, socio_fileLabel
 from functions.upload_ADLs import upload_dataframe_to_adls
 
 
-def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.json",
-                                BASE_URL="https://data.cityofchicago.org/resource",
-                                MAX_RECORDS=100,
-                                TIME_OUT=10,
-                                DELAY=1.5,
-                                SAVE_PATH='RawData/DataSet3'):
+def ingest_socioecon_indicators_data(END_POINT="kn9c-c2s2.json",
+                                     BASE_URL="https://data.cityofchicago.org/resource",
+                                     MAX_RECORDS=100,
+                                     TIME_OUT=10,
+                                     DELAY=1.5,
+                                     SAVE_PATH='RawData/DataSet3'):
     """
-    Ingests the 'Socioeconomic areas' dataset and uploads to Azure Data Lake Storage (ADLS).
+    Ingests the 'Socioeconomic indicators' dataset and uploads to Azure Data Lake Storage (ADLS).
 
     About Data:
-    Source #3: Socioeconomically Disadvantaged Areas - (STATIC source)
+    Source #4: socioeconomic indicators in Chicago, 2008 – 2012
 
-        - API Endpoint	https://data.cityofchicago.org/resource/2ui7-wiq8.json
-        - API Documentation	https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8
-        - Data Owner	Department of Planning and Development
-        - Date Created	October 13, 2022
-        - Last Update	July 12, 2024
-        - Data Update Frequency	N/A
-        - Rows:	254K
-        - Columns: 1
-        - 254K rows x 1 column
+        - API Endpoint:	https://data.cityofchicago.org/resource/kn9c-c2s2.json
+        - API Documentation:	https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2
+        - Data Owner:	Public Health
+        - Date Created:	January 5, 2012
+        - Last Update:	September 12, 2014
+        - Data Update Frequency:	Updated as new data becomes available
+        - Rows:	78
+        - Columns: 9
+        - 78 rows x 9 columns
     """
 
-    print("DataSet3 ingestion - 'Socioeconomic Areas...'")
+    print("DataSet4 ingestion - 'Socioeconomic Indicators...'")
 
     # Load API keys
     api_key_id, api_secret = load_config()
@@ -54,7 +54,7 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.json",
     print(f"Number of rows: {len(df)}")
 
     # Generate file label based on the date range
-    csv_fileLabel = socio_fileLabel(df, label_="socio_econ_areas")
+    csv_fileLabel = socio_fileLabel(df, label_="socio_econ_indicators")
 
     print("\n[Success] - Generated file label:", csv_fileLabel)
 
@@ -69,7 +69,7 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.json",
 
     storageAcctName = "crimeinchicago"
     fileSysName = "data-engineering-project"
-    dirName = "Socioeconomic Areas"
+    dirName = "Socioeconomic Indicators"
 
     directory = init_adls_directory(storageAcctName,
                                     sas_key,
@@ -83,6 +83,6 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.json",
 # Allow this script to be run independently or imported
 if __name__ == "__main__":
 
-    ingest_socioecon_areas_data(MAX_RECORDS=205000,
-                                DELAY=2,
-                                TIME_OUT=20)
+    ingest_socioecon_indicators_data(MAX_RECORDS=1000,
+                                     DELAY=2,
+                                     TIME_OUT=20)

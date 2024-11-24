@@ -1,7 +1,7 @@
 
 from functions.setup import load_config, init_adls_directory, save_and_load_csv
 from functions.pull_data import fetch_data_from_api
-from functions.timeLabels import create_file_label_from_dates
+from functions.timeLabels import crimes_fileLabel
 from functions.upload_ADLs import upload_dataframe_to_adls
 
 
@@ -69,7 +69,9 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
     print(f"Number of rows: {len(df)}")
 
     # Generate file label based on the date range
-    csv_file_label = create_file_label_from_dates(df, "date", "Crimes")
+    csv_file_label = crimes_fileLabel(
+        df, date_column="date", dataSource="Crimes")
+
     print("\n[Success] - Generated file label:", csv_file_label)
 
     # save data as csv
