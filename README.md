@@ -77,33 +77,33 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 
 ### Source #3: Socioeconomically Disadvantaged Areas
 
-| Property                  | Details                                                                                                                                |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **Dataset URL**           | [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)                        |
-| **About Data**            | [About Data](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data) |
-| **API Endpoint**          | [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)                     |
-| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8`](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8) |
-| **Data Owner**            | Department of Planning and Development                                                                                                 |
-| **Date Created**          | `October 13, 2022`                                                                                                                     |
-| **Last Update**           | `July 12, 2024`                                                                                                                        |
-| **Data Update Frequency** | `N/A`                                                                                                                                  |
-| **Rows**                  | `254K`                                                                                                                                 |
-| **Columns**               | `1`                                                                                                                                    |
+| Property                  | Details                                                                                                                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Dataset URL**           | [Socioeconomically Disadvantaged Areas](https://catalog.data.gov/dataset/socioeconomically-disadvantaged-areas)                                                                                                                                        |
+| **About Data**            | [`https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data`](https://data.cityofchicago.org/Community-Economic-Development/Socioeconomically-Disadvantaged-Areas/2ui7-wiq8/about_data) |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/2ui7-wiq8.json`](https://data.cityofchicago.org/resource/2ui7-wiq8.json)                                                                                                                                     |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8`](https://dev.socrata.com/foundry/data.cityofchicago.org/2ui7-wiq8)                                                                                                                 |
+| **Data Owner**            | Department of Planning and Development                                                                                                                                                                                                                 |
+| **Date Created**          | `October 13, 2022`                                                                                                                                                                                                                                     |
+| **Last Update**           | `July 12, 2024`                                                                                                                                                                                                                                        |
+| **Data Update Frequency** | `N/A`                                                                                                                                                                                                                                                  |
+| **Rows**                  | `254K`                                                                                                                                                                                                                                                 |
+| **Columns**               | `1`                                                                                                                                                                                                                                                    |
 
 ### Source #4: Socioeconomic Indicators
 
-| Property                  | Details                                                                                                                                                |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Dataset URL**           | [Census Data - Selected socioeconomic indicators](https://catalog.data.gov/dataset/census-data-selected-socioeconomic-indicators-in-chicago-2008-2012) |
-| **About Data**            | [About Data](https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2/about_data)             |
-| **API Endpoint**          | [`https://data.cityofchicago.org/resource/kn9c-c2s2.json`](https://data.cityofchicago.org/resource/kn9c-c2s2.json)                                     |
-| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2`](https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2)                 |
-| **Data Owner**            | Public Health                                                                                                                                          |
-| **Date Created**          | `January 5, 2012`                                                                                                                                      |
-| **Last Update**           | `September 12, 2014`                                                                                                                                   |
-| **Data Update Frequency** | `Updated as new data becomes available`                                                                                                                |
-| **Rows**                  | `78`                                                                                                                                                   |
-| **Columns**               | `9`                                                                                                                                                    |
+| Property                  | Details                                                                                                                                                                                                                                                        |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Dataset URL**           | [Census Data - Selected socioeconomic indicators](https://catalog.data.gov/dataset/census-data-selected-socioeconomic-indicators-in-chicago-2008-2012)                                                                                                         |
+| **About Data**            | [`https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2/about_data`](https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2/about_data) |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/kn9c-c2s2.json`](https://data.cityofchicago.org/resource/kn9c-c2s2.json)                                                                                                                                             |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2`](https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2)                                                                                                                         |
+| **Data Owner**            | Public Health                                                                                                                                                                                                                                                  |
+| **Date Created**          | `January 5, 2012`                                                                                                                                                                                                                                              |
+| **Last Update**           | `September 12, 2014`                                                                                                                                                                                                                                           |
+| **Data Update Frequency** | `Updated as new data becomes available`                                                                                                                                                                                                                        |
+| **Rows**                  | `78`                                                                                                                                                                                                                                                           |
+| **Columns**               | `9`                                                                                                                                                                                                                                                            |
 
 ### Ingestion Steps
 
