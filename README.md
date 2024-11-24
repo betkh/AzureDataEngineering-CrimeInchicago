@@ -90,6 +90,21 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Rows**                  | `254K`                                                                                                                                 |
 | **Columns**               | `1`                                                                                                                                    |
 
+### Source #4: Socioeconomic Indicators
+
+| Property                  | Details                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Dataset URL**           | [Census Data - Selected socioeconomic indicators](https://catalog.data.gov/dataset/census-data-selected-socioeconomic-indicators-in-chicago-2008-2012) |
+| **About Data**            | [About Data](https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2/about_data)             |
+| **API Endpoint**          | [`https://data.cityofchicago.org/resource/kn9c-c2s2.json`](https://data.cityofchicago.org/resource/kn9c-c2s2.json)                                     |
+| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2`](https://dev.socrata.com/foundry/data.cityofchicago.org/kn9c-c2s2)                 |
+| **Data Owner**            | Public Health                                                                                                                                          |
+| **Date Created**          | `January 5, 2012`                                                                                                                                      |
+| **Last Update**           | `September 12, 2014`                                                                                                                                   |
+| **Data Update Frequency** | `Updated as new data becomes available`                                                                                                                |
+| **Rows**                  | `78`                                                                                                                                                   |
+| **Columns**               | `9`                                                                                                                                                    |
+
 ### Ingestion Steps
 
 Each dataset is ingested and stored in Azure Blob Storage in `.csv` format, where it is subsequently cleaned, enriched, and transformed for analysis and reporting.
