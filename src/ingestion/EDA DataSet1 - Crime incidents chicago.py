@@ -4,10 +4,11 @@
 
 # COMMAND ----------
 
+# storage endpoint 
+# https://crimeinchicago.dfs.core.windows.net/       (- remove https://)
 
-# https://crimeinchicago.dfs.core.windows.net/
 
-# storage enfpoint - remove https://
+container_name = "data-engineering-project"  
 storage_end_point = "crimeinchicago.dfs.core.windows.net" 
 my_scope = "Data-eng-chg-crime"
 my_key = "secret-key-for-crimeinchicago-storage-acct"
@@ -20,17 +21,13 @@ spark.conf.set(
 
 
 # construct the URI using:
-
-#uri = f"abfss://{continername}@{storage_end_point}/"
-
-# container name 
-container_name = "data-engineering-project"  
+#uri = f"abfss://{container_name}@{storage_end_point}/"
 
 uri = "abfss://data-engineering-project@crimeinchicago.dfs.core.windows.net/"
 
 
 # Read the Grades file using defaults and use the top row as header (not the default behavior)
-crimes_df = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-10-22_204480_rows.csv", header=True)
+crimes_df = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-11-16_205000_rows.csv", header=True)
 display(crimes_df)
 
 # COMMAND ----------
@@ -76,7 +73,7 @@ schema = StructType([
 
 
 # Load the CSV file with the schema
-df = spark.read.options(delimiter=',', header=True).schema(schema).csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-10-22_204480_rows.csv")
+df = spark.read.options(delimiter=',', header=True).schema(schema).csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-11-16_205000_rows.csv")
 
 
 print(f"\n\n\ndata types after schema definition: {df.dtypes}")
@@ -180,21 +177,6 @@ display(df.groupBy("community_area").count().orderBy("count", ascending=False))
 
 # COMMAND ----------
 
-# Correlation matrix for numerical features
-numeric_columns = ["beat", "district", "ward", "community_area", "latitude", "longitude"]
-correlation_matrix = df.select(numeric_columns).toPandas().corr()
-
-import seaborn as sns
-
-# Heatmap for correlation
-plt.figure(figsize=(10, 6))
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
-plt.title('Correlation Matrix')
-plt.show()
-
-
-# COMMAND ----------
-
 # MAGIC %md
 # MAGIC ### II. Temporal Analysis of Crime incidents - High Crime Year, Months, Days
 # MAGIC
@@ -280,6 +262,8 @@ ax2.tick_params(axis='x', rotation=45)
 ax2.grid(True, which="both", linestyle='--', linewidth=0.5)
 
 plt.tight_layout()
+
+plt.savefig('temporal_analysis_crime_incidents.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
@@ -399,15 +383,118 @@ print(f"Unique Community Areas: {unique_community_areas}")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ##### Aggregate crime incident by community area
+# MAGIC ##### Aggregate crime incident by District
 
 # COMMAND ----------
 
 # Aggregate crime incidents by district and community area
-community_area_counts = df.groupBy("district", "community_area").count().orderBy("count", ascending=False)
+community_area_counts = df.groupBy("district").count().orderBy("count", ascending=False)
 
 # Convert to Pandas DataFrame for visualization
 community_area_counts_pd = community_area_counts.toPandas()
 
 display(community_area_counts_pd)
+
+
+# COMMAND ----------
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import count
+import pandas as pd
+
+# Initialize Spark session
+spark = SparkSession.builder.appName("Crime Data Analysis").getOrCreate()
+
+# Aggregate crime incidents by district
+district_counts = df.groupBy("district").count().orderBy("count", ascending=False)
+
+# Convert to Pandas DataFrame for visualization
+district_counts_pd = district_counts.toPandas()
+
+# Display the DataFrame (optional, for notebook environments)
+display(district_counts_pd)
+
+
+
+
+# COMMAND ----------
+
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import pandas as pd
+import warnings
+
+# Suppress warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
+norm_counts = (district_counts_pd['count'] - district_counts_pd['count'].min()) / \
+              (district_counts_pd['count'].max() - district_counts_pd['count'].min())
+
+# Set up color map
+cmap = cm.get_cmap('viridis')
+colors = cmap(norm_counts)
+
+# Plot setup
+plt.figure(figsize=(20, 6))
+ax = plt.subplot(1, 1, 1)
+
+# Plot vertical bar chart with colors based on normalized counts
+bars = ax.bar(district_counts_pd['district'].astype(str), district_counts_pd['count'], color=colors)
+ax.set_title('Crime Incidents by District', fontsize=18, pad=15)
+ax.set_xlabel('District', fontsize=14)
+ax.set_ylabel('Number of Crimes', fontsize=14)
+ax.grid(axis='y', linestyle='--', alpha=0.7)
+
+# Label each bar with count in "K" format
+for bar in bars:
+    count_k = f"{int(bar.get_height() / 1000)}K" if bar.get_height() >= 1000 else str(bar.get_height())
+    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 500, count_k, ha='center', va='bottom', fontsize=10, color='black')
+
+# Color spectrum legend at the side
+sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=district_counts_pd['count'].min(), vmax=district_counts_pd['count'].max()))
+sm.set_array([])
+cbar = plt.colorbar(sm, ax=ax, orientation='vertical', pad=0.02)
+cbar.set_label('Magnitude of Crimes', fontsize=14)
+
+plt.tight_layout()
+plt.show()
+
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC **Insight**: 
+# MAGIC - district 11 is the most dangerous area
+# MAGIC - district 30 is the safest with least crime incidents
+# MAGIC - district `13`, `21`, `23`, `30` doesn't exist on the cpd WEBSITE
+# MAGIC - here are the chicago police districts [website](https://www.chicagopolice.org/police-districts/)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Heat Map of crime incidents in chocago districts
+# MAGIC
+# MAGIC **Steps to Visualize Crime Heat Map by Police District**
+# MAGIC - Load the Crime Data in PySpark and aggregate crime incidents by district.
+# MAGIC - Convert the Aggregated Data to a Pandas DataFrame.
+# MAGIC - Load the GeoJSON File using GeoPandas.
+# MAGIC - Merge Crime Data with GeoJSON data.
+# MAGIC - Create a Choropleth Map with Folium to visualize the heat map.
+# MAGIC - Save the Map as an HTML file.
+
+# COMMAND ----------
+
+from pyspark.sql import functions as F
+
+# Aggregate the number of crime incidents in a district
+crime_counts_by_district = df.groupBy("district").agg(F.count("*").alias("crime_count"))
+
+# Convert the PySpark DataFrame to Pandas for easier merging with GeoJSON data
+crime_counts_by_district_pd = crime_counts_by_district.toPandas()
+
+display(crime_counts_by_district_pd)
 
