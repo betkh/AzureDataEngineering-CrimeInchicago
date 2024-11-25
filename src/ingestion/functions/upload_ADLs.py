@@ -1,4 +1,5 @@
 from azure.storage.filedatalake import DataLakeServiceClient
+import json
 
 
 def init_storage_acct(storage_account_name, storage_account_key):
@@ -22,4 +23,24 @@ def upload_dataframe_to_adls(directory_client, df, remote_file_name):
 
     # Upload the CSV data
     file_client.upload_data(csv_data, overwrite=True)
+    print(f"[Success] - '{remote_file_name}' uploaded to ADLS successfully.")
+
+
+def upload_geojson_to_adls(directory_client, local_file_path, remote_file_name):
+    """
+    Upload GeoJSON data from a local file to Azure Data Lake.
+
+    """
+    if not remote_file_name.endswith('.geojson'):
+        remote_file_name += '.geojson'
+
+    # Read the content of the GeoJSON file
+    with open(local_file_path, "r") as f:
+        geojson_content = f.read()
+
+    # Create a file client in the specified directory
+    file_client = directory_client.create_file(remote_file_name)
+
+    # Upload the GeoJSON content
+    file_client.upload_data(geojson_content, overwrite=True)
     print(f"[Success] - '{remote_file_name}' uploaded to ADLS successfully.")
