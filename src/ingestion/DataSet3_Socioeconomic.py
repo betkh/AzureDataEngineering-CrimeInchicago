@@ -7,7 +7,7 @@ from functions.upload_ADLs import upload_dataframe_to_adls
 
 def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.json",
                                 BASE_URL="https://data.cityofchicago.org/resource",
-                                MAX_RECORDS=100,
+                                MAX_RECORDS=300000,
                                 TIME_OUT=10,
                                 DELAY=1.5,
                                 SAVE_PATH='RawData/DataSet3'):
@@ -83,6 +83,6 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.json",
 # Allow this script to be run independently or imported
 if __name__ == "__main__":
 
-    ingest_socioecon_areas_data(MAX_RECORDS=205000,
-                                DELAY=2,
+    ingest_socioecon_areas_data(MAX_RECORDS=300000,
+                                DELAY=3.6,
                                 TIME_OUT=20)

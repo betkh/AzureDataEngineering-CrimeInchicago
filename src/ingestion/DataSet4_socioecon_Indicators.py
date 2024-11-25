@@ -7,7 +7,7 @@ from functions.upload_ADLs import upload_dataframe_to_adls
 
 def ingest_socioecon_indicators_data(END_POINT="kn9c-c2s2.json",
                                      BASE_URL="https://data.cityofchicago.org/resource",
-                                     MAX_RECORDS=100,
+                                     MAX_RECORDS=300000,
                                      TIME_OUT=10,
                                      DELAY=1.5,
                                      SAVE_PATH='RawData/DataSet3'):
@@ -84,5 +84,5 @@ def ingest_socioecon_indicators_data(END_POINT="kn9c-c2s2.json",
 if __name__ == "__main__":
 
     ingest_socioecon_indicators_data(MAX_RECORDS=1000,
-                                     DELAY=2,
+                                     DELAY=3.6,
                                      TIME_OUT=20)

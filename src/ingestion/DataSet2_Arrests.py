@@ -7,13 +7,12 @@ from functions.upload_ADLs import upload_dataframe_to_adls
 
 def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
                         BASE_URL="https://data.cityofchicago.org/resource",
-                        MAX_RECORDS=100,
-                        TIME_OUT=10,
-                        DELAY=1.5,
+                        MAX_RECORDS=300000,
                         COLUMN_FILTER=["arrest_date", "race", "charge_1_description", "charge_1_type", "charge_1_class",
                                        "charge_2_description", "charge_2_type", "charge_2_class",
                                        "charge_3_description", "charge_3_type", "charge_3_class",
                                        "charge_4_description", "charge_4_type", "charge_4_class"],
+                        ROW_FILTER="arrest_date>='2024-10-26T00:00:00' AND arrest_date<='2024-11-24T00:00:00'",
                         SAVE_PATH='RawData/DataSet2',
                         STORAGE_ACCT_NAME="crimeinchicago",
                         FILE_SYSTEM_NAME="data-engineering-project",
@@ -50,7 +49,7 @@ def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
     column_filter = COLUMN_FILTER
 
     # filter all recent arrests
-    row_filter = "arrest_date<='2024-10-26T00:00:00'"
+    row_filter = ROW_FILTER
 
     # fetch data
     df = fetch_data_from_api(url,
@@ -58,9 +57,7 @@ def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
                              api_secret,
                              columns=column_filter,
                              row_filter=row_filter,
-                             max_records=MAX_RECORDS,
-                             timeout=TIME_OUT,
-                             delay=DELAY)
+                             max_records=MAX_RECORDS)
 
     print("[Success] - Data fetched successfully and stored in df")
     print("\nData insights:")
@@ -99,6 +96,4 @@ def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
 
 # Allow this script to be run independently or imported
 if __name__ == "__main__":
-    ingest_Arrests_Data(MAX_RECORDS=205000,
-                        DELAY=2,
-                        TIME_OUT=20)
+    ingest_Arrests_Data(MAX_RECORDS=210000)

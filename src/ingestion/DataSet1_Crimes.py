@@ -7,12 +7,10 @@ from functions.upload_ADLs import upload_dataframe_to_adls
 
 def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
                        BASE_URL="https://data.cityofchicago.org/resource",
-                       MAX_RECORDS=100,
-                       TIME_OUT=10,
-                       DELAY=1.5,
+                       MAX_RECORDS=300000,
                        COLUMN_FILTER=["date", "primary_type", "description", "location_description",
                                       "arrest", "beat", "district", "ward", "community_area", "latitude", "longitude"],
-                       ROW_FILTER="arrest=true AND date>='2019-01-01T00:00:00' AND date<='2024-10-22T00:00:00'",
+                       ROW_FILTER="arrest=true AND date>='2024-11-16T00:00:00' AND date<='2024-11-24T00:00:00'",
                        SAVE_PATH='RawData/DataSet1',
                        STORAGE_ACCT_NAME="crimeinchicago",
                        FILE_SYSTEM_NAME="data-engineering-project",
@@ -57,9 +55,7 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
                              api_secret,                # API secret for authentication
                              columns=column_filter,     # List of columns to retrieve
                              row_filter=row_filter,     # Filter to apply on rows
-                             max_records=MAX_RECORDS,            # Maximum number of records to fetch in one go
-                             timeout=TIME_OUT,                # Request timeout in seconds
-                             delay=DELAY)                 # Delay between successive API calls
+                             max_records=MAX_RECORDS)            # Maximum number of records to fetch in one go)                 # Delay between successive API calls
 
     print("[Success] - Data fetch from API successful and data stored in df")
     print("\nData insights:")
@@ -98,6 +94,4 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
 
 # Allow this script to be run independently or imported
 if __name__ == "__main__":
-    ingest_crimes_data(MAX_RECORDS=205000,
-                       DELAY=2,
-                       TIME_OUT=20)
+    ingest_crimes_data(MAX_RECORDS=210000)
