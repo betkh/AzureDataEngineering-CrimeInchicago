@@ -14,7 +14,7 @@ def createDayLabel():
     return dayLabel
 
 
-def create_file_label_from_dates(df, date_column="date", dataSource="Data"):
+def crimes_fileLabel(df, date_column="date", dataSource="Data"):
     """Generate a file label based on the date range in the data."""
     df[date_column] = pd.to_datetime(df[date_column])
     min_date = df[date_column].min().strftime("%Y-%m-%d")
@@ -24,13 +24,13 @@ def create_file_label_from_dates(df, date_column="date", dataSource="Data"):
     return label
 
 
-def create_file_label_geo(df):
+def socio_fileLabel(df, label_):
 
     now = datetime.now()
     timeStamp = now.strftime("%Y-%m-%d-%H:%M")
     max_rows = len(df)
 
-    label = f"socio-econ-areas-{timeStamp}_{max_rows}_rows.csv"
+    label = f"{label_}-{timeStamp}_{max_rows}_rows.csv"
     return label
 
 
