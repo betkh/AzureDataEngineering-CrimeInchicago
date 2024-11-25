@@ -60,6 +60,7 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Data Update Frequency** | `Daily`                                                                                                                                                                                |
 | **Rows**                  | `8.19M` (each row represents a reported crime, anonymized to the block level)                                                                                                          |
 | **Columns**               | `22`                                                                                                                                                                                   |
+| **DateRange**             | `01/01/2001` - `present`                                                                                                                                                               |
 
 ### Source #2: Arrests - Dynamic data
 
@@ -74,6 +75,7 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Data Update Frequency** | `Daily`                                                                                                                                                  |
 | **Rows**                  | `660K` (each row represents an arrest, anonymized to the block level)                                                                                    |
 | **Columns**               | `24`                                                                                                                                                     |
+| **DateRange**             | `01/01/2014` - `present`                                                                                                                                 |
 
 ### Source #3: Socioeconomically Disadvantaged Areas
 
