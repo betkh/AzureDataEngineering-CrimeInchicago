@@ -27,8 +27,15 @@ uri = "abfss://data-engineering-project@crimeinchicago.dfs.core.windows.net/"
 
 
 # Read the Grades file using defaults and use the top row as header (not the default behavior)
-crimes_df = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-11-16_205000_rows.csv", header=True)
+crimes_df = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-11-16_206941_rows.csv", header=True)
+
+# Read the Grades file using defaults and use the top row as header (not the default behavior)
+arrests_df = spark.read.csv(uri+"Arrests/Arrests_2019-12-25_to_2024-11-20_200000_rows.csv", header=True)
 display(crimes_df)
+
+# COMMAND ----------
+
+display(arrests_df)
 
 # COMMAND ----------
 
@@ -58,14 +65,13 @@ print(f"data types before schema definition: {crimes_df.dtypes}")
 
 
 schema = StructType([
+    StructField("case_number", StringType(), True),
     StructField("date", TimestampType(), True),           # Assuming this is a datetime field
     StructField("primary_type", StringType(), True),      # Type of crime
     StructField("description", StringType(), True),       # Description of crime
     StructField("location_description", StringType(), True), # Crime location type
     StructField("arrest", BooleanType(), True),           # Whether an arrest was made
-    StructField("beat", StringType(), True),             # Police beat
     StructField("district", IntegerType(), True),         # Police district
-    StructField("ward", DoubleType(), True),             # Ward number
     StructField("community_area", StringType(), True),   # Community area code
     StructField("latitude", DoubleType(), True),          # Latitude
     StructField("longitude", DoubleType(), True)          # Longitude
@@ -73,7 +79,7 @@ schema = StructType([
 
 
 # Load the CSV file with the schema
-df = spark.read.options(delimiter=',', header=True).schema(schema).csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-11-16_205000_rows.csv")
+df = spark.read.options(delimiter=',', header=True).schema(schema).csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2024-11-16_206941_rows.csv")
 
 
 print(f"\n\n\ndata types after schema definition: {df.dtypes}")
@@ -361,7 +367,7 @@ plt.show()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### III. Spatial Analysis of Crime incidents - Wards, Districts, Beat, Community Area, 
+# MAGIC ### III. Spatial Analysis of Crime incidents - Community Area, 
 # MAGIC
 # MAGIC - heatmaps using latituide, longutuide
 # MAGIC - bubble plots
@@ -369,15 +375,8 @@ plt.show()
 # COMMAND ----------
 
 # Count unique values in each of the specified columns
-unique_wards = df.select("ward").distinct().count()
-unique_districts = df.select("district").distinct().count()
-unique_beats = df.select("beat").distinct().count()
 unique_community_areas = df.select("community_area").distinct().count()
 
-# Print the results
-print(f"Unique Wards: {unique_wards}")
-print(f"Unique Districts: {unique_districts}")
-print(f"Unique Beats: {unique_beats}")
 print(f"Unique Community Areas: {unique_community_areas}")
 
 # COMMAND ----------
@@ -417,7 +416,9 @@ district_counts_pd = district_counts.toPandas()
 display(district_counts_pd)
 
 
+# COMMAND ----------
 
+district_counts_pd.to_csv('district_crime_inicdent_count.csv', index=False)
 
 # COMMAND ----------
 
@@ -488,13 +489,241 @@ plt.show()
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC ## DataSet-2: Arrests
+
+# COMMAND ----------
+
+# Read the Grades file using defaults and use the top row as header (not the default behavior)
+arrests_df = spark.read.csv(uri+"Arrests/Arrests_2019-12-25_to_2024-11-20_200000_rows.csv", header=True)
+ 
+display(arrests_df)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### insights about data
+
+# COMMAND ----------
+
+# Get the number of columns
+num_columns = len(arrests_df.columns)
+print(f"Number of columns: {num_columns}")
+
+# COMMAND ----------
+
 from pyspark.sql import functions as F
+from pyspark.sql import DataFrame
 
-# Aggregate the number of crime incidents in a district
-crime_counts_by_district = df.groupBy("district").agg(F.count("*").alias("crime_count"))
+# create a df for null counts
+null_counts = [(col, arrests_df.filter(F.col(col).isNull()).count()) for col in arrests_df.columns]
 
-# Convert the PySpark DataFrame to Pandas for easier merging with GeoJSON data
-crime_counts_by_district_pd = crime_counts_by_district.toPandas()
 
-display(crime_counts_by_district_pd)
+null_counts_df = spark.createDataFrame(null_counts, ["columnLabel", "NullCounts"])
+
+sorted_null_counts_df = null_counts_df.orderBy("NullCounts", ascending=False)
+
+
+display(sorted_null_counts_df)
+
+# COMMAND ----------
+
+from pyspark.sql.functions import col
+
+# Aggregate by 'race'
+race_counts = arrests_df.groupBy("race").count()
+
+
+top_4_races_df = race_counts.orderBy(col("count").desc()).limit(4)
+
+display(top_4_races_df)
+
+
+# COMMAND ----------
+
+from pyspark.sql import functions as F
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import matplotlib.cm as cm
+
+race_counts_pd = top_4_races_df.toPandas()
+
+sns.set(style="darkgrid") 
+
+
+color_map = cm.get_cmap("viridis", len(race_counts_pd))
+
+
+plt.figure(figsize=(15, 5))
+
+colors = [color_map(i) for i in range(len(race_counts_pd))]  # Get colors from the color map
+
+
+plt.bar(race_counts_pd['race'], race_counts_pd['count'], color=colors)
+plt.xlabel('Race')
+plt.ylabel('Count')
+plt.title('Count of Arrests by Race')
+plt.xticks(rotation=0)  
+plt.tight_layout() 
+
+plt.show()
+
+# COMMAND ----------
+
+from pyspark.sql import functions as F
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+import matplotlib.cm as cm
+
+charge_counts = arrests_df.groupBy("charge_1_type").count()
+charge_counts_pd = charge_counts.toPandas()
+
+top_3_chargeCounts = charge_counts_pd.sort_values(by='count', ascending=False).head(3)
+display(top_3_chargeCounts)
+
+# COMMAND ----------
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.cm as cm
+
+
+top_3_chargeCounts['charge_1_type'] = top_3_chargeCounts['charge_1_type'].replace({'F': 'Felony', 'M': 'Misdemeanor', None: 'Uncategorized'})
+
+
+sns.set(style="darkgrid")
+color_map = cm.get_cmap("viridis", len(top_3_chargeCounts))
+
+# Create figure
+plt.figure(figsize=(12, 7))
+colors = [color_map(i) for i in range(len(top_3_chargeCounts))]
+bars = plt.bar(top_3_chargeCounts['charge_1_type'], top_3_chargeCounts['count'], color=colors)
+
+# Add labels 
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 2, height, f'{int(height)}', ha='center', va='bottom')
+
+
+
+# Label axes and title
+plt.xlabel('Charge Type')
+plt.ylabel('Count')
+plt.title('Count of Arrests by Charge Type')
+plt.xticks(rotation=0, ha='right')
+plt.tight_layout()
+plt.show()
+
+
+# COMMAND ----------
+
+from pyspark.sql.functions import month, year
+
+arrests_df_month_year = arrests_df.withColumn("arrest_month", month("arrest_date"))
+arrests_df_month_year = arrests_df_month_year.withColumn("arrest_year", year("arrest_date"))
+
+arrests_df_month_year
+
+display(arrests_df_month_year.select("arrest_date", "arrest_month", "arrest_year", "charge_1_type"))
+
+
+# COMMAND ----------
+
+from pyspark.sql.functions import date_format
+
+# Add a new column 'year_month' with the format 'YYYY-MM'
+arrests_df = arrests_df.withColumn("year_month", date_format("arrest_date", "yyyy-MM"))
+
+# Aggregate and count the number of arrests by 'year_month'
+monthly_arrest_counts = arrests_df.groupBy("year_month").count().orderBy("year_month")
+
+display(monthly_arrest_counts)
+
+# COMMAND ----------
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+monthly_arrest_counts_pd = monthly_arrest_counts.toPandas()
+
+# Apply log transformation to smooth the plot
+monthly_arrest_counts_pd['log_count'] = np.log1p(monthly_arrest_counts_pd['count'])
+
+# figure size
+plt.figure(figsize=(20, 6))  
+plt.plot(monthly_arrest_counts_pd['year_month'], monthly_arrest_counts_pd['log_count'], marker='o', color='blue', linewidth=2)
+
+# Labels and title
+plt.title('Temporal Analysis - Monthly Arrest Patterns Over 5 Years (Log-scaled)', fontsize=16)
+plt.xlabel('Year-Month', fontsize=14)
+plt.ylabel('Log of Number of Arrests', fontsize=14)
+
+# 
+plt.xticks(rotation=90)
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ## EDA DataSet4 - Socio economic Indicators
+
+# COMMAND ----------
+
+indicators_df = spark.read.csv(uri+"Socioeconomic Indicators/socio_econ_indicators-2024-11-24-16:53_78_rows.csv", header=True)
+ 
+display(indicators_df.limit(10))
+
+# COMMAND ----------
+
+# Select only the desired columns
+indicators_df = indicators_df.select(
+    "community_area_name",
+    "percent_households_below_poverty",
+    "percent_aged_25_without_high_school_diploma",
+    "per_capita_income_",
+    "hardship_index"
+)
+
+# Display the filtered DataFrame
+display(indicators_df)
+
+# COMMAND ----------
+
+# Number of rows and columns
+num_rows = indicators_df.count()
+num_cols = len(indicators_df.columns)
+
+print(f"Number of rows: {num_rows}")
+print(f"Number of columns: {num_cols}")
+
+
+# COMMAND ----------
+
+# Display the structure and data types of the DataFrame
+indicators_df.printSchema()
+
+# COMMAND ----------
+
+from pyspark.sql.functions import col, sum as _sum
+
+# Count null values for each column
+null_counts = indicators_df.select([(indicators_df[c].isNull().cast("int")).alias(c) for c in indicators_df.columns]) \
+                           .agg(*[_sum(c).alias(c) for c in indicators_df.columns])
+display(null_counts)
+
+
+# COMMAND ----------
+
+numeric_cols = [field.name for field in indicators_df.schema.fields if str(field.dataType) in ('IntegerType', 'DoubleType')]
+categorical_cols = [field.name for field in indicators_df.schema.fields if str(field.dataType) == 'StringType']
+
+print(f"Numeric Columns: {numeric_cols}")
+print(f"Categorical Columns: {categorical_cols}")
 
