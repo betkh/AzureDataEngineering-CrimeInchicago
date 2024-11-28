@@ -8,7 +8,7 @@
 # https://crimeinchicago.dfs.core.windows.net/       (- remove https://)
 
 
-container_name = "data-engineering-project"  
+container_name = "input-ingested-raw"  
 storage_end_point = "crimeinchicago.dfs.core.windows.net" 
 my_scope = "Data-eng-chg-crime"
 my_key = "secret-key-for-crimeinchicago-storage-acct"
@@ -21,37 +21,81 @@ spark.conf.set(
 
 
 # construct the URI using:
-#uri = f"abfss://{container_name}@{storage_end_point}/"
+uri = f"abfss://{container_name}@{storage_end_point}/"
 
-uri = "abfss://data-engineering-project@crimeinchicago.dfs.core.windows.net/"
-
-crimes_DF = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2014_present_filtered_new.csv", header=True)
-arrests_DF = spark.read.csv(uri+"Arrests/Arrests_2014_present_filtered.csv", header=True)
-indicators_DF = spark.read.csv(uri+"Socioeconomic Indicators/socio_econ_indicators-2024-11-24-16:53_78_rows.csv", header=True)
+# uri = "abfss://data-engineering-project@crimeinchicago.dfs.core.windows.net/"
 
 
-arrests_DF = arrests_DF.select("CASE NUMBER", "ARREST DATE", "RACE", "CHARGE 1 DESCRIPTION", "CHARGE 1 TYPE", "CHARGE 1 CLASS")
 
-# filter columns
-indicators_DF = indicators_DF.select("ca",
-    "community_area_name",
-    "percent_households_below_poverty",
-    "percent_aged_25_without_high_school_diploma",
-    "per_capita_income_",
-    "hardship_index"
-)
+# DataSource1 - Crime Incidents 
+crimes_2019 = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2019-01-01_to_2019-12-31_56106_rows.csv", header=True)
+crimes_2020 = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2020-01-01_to_2020-12-31_33808_rows.csv", header=True)
+crimes_2021 = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2021-01-01_to_2021-12-31_25095_rows.csv", header=True)
+crimes_2022 = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2022-01-01_to_2022-12-31_27248_rows.csv", header=True)
+crimes_2023 = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2023-01-01_to_2023-12-31_31560_rows.csv", header=True)
+crimes_2024 = spark.read.csv(uri+"Crime2019_to_Present/Crimes_2024-01-01_to_2024-11-19_30397_rows.csv", header=True)
+
+# DataSource2 - Arrests 
+arrests_2019 = spark.read.csv(uri+"Arrests/Arrests_2019-01-01_to_2019-12-31_50753_rows.csv", header=True)
+arrests_2020 = spark.read.csv(uri+"Arrests/Arrests_2020-01-01_to_2020-12-31_31354_rows.csv", header=True)
+arrests_2021 = spark.read.csv(uri+"Arrests/Arrests_2021-01-01_to_2021-12-31_24422_rows.csv", header=True)
+arrests_2022 = spark.read.csv(uri+"Arrests/Arrests_2022-01-01_to_2022-12-31_25177_rows.csv", header=True)
+arrests_2023 = spark.read.csv(uri+"Arrests/Arrests_2023-01-01_to_2023-12-31_28990_rows.csv", header=True)
+arrests_2024 = spark.read.csv(uri+"Arrests/Arrests_2024-01-01_to_2024-11-23_29945_rows.csv", header=True)
+
+# # DataSource3 - Socio economic Indicators 
+indicators_DF = spark.read.csv(uri+"Socioeconomic_Indicators/socio_econ_indicators-2024-11-27-15:22_78_rows.csv", header=True)
+
+# # DataSource4 - economially disadvantaged areas
+# disadvantagedAreas_DF = spark.read.format("geojson").load(uri+"Disadvanatged_Areas/socioecon_disadvantaged_Areas.geojson")
 
 
-display(crimes_DF.limit(3))
-display(arrests_DF.limit(3))
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC
+# MAGIC
+# MAGIC ## Transformation-1:  Unify Data 
+
+# COMMAND ----------
+
+from pyspark.sql import DataFrame
+def merge_dataframes(dataframes: list) -> DataFrame:
+    
+    # Start with the first df
+    merged_df = dataframes[0]
+    
+    # Loop through the rest of the DataFrames and perform union
+    for df in dataframes[1:]:
+        merged_df = merged_df.union(df)
+    
+    return merged_df
+
+
+
+# List of all DataFrames
+crime_dataframes = [crimes_2019, crimes_2020, crimes_2021, crimes_2022, crimes_2023, crimes_2024]
+arrest_dataframes = [arrests_2019, arrests_2020, arrests_2021, arrests_2022, arrests_2023, arrests_2024]
+
+# Merge all crime data into a single DataFrame
+merged_crime_DF = merge_dataframes(crime_dataframes)
+merged_arrest_DF = merge_dataframes(arrest_dataframes)
+
+
+# rename column in indicators_DF so that it will be merged with merged_crime_DF later
+indicators_DF = indicators_DF.withColumnRenamed("ca", "community_area")
+
+
+display(merged_crime_DF.limit(3))
+display(merged_arrest_DF.limit(3))
 display(indicators_DF.limit(3))
 
 # COMMAND ----------
 
 
 # Count the total number of rows in the DataFrame
-total_rows_crimes = crimes_DF.count()
-total_rows_arrests = arrests_DF.count()
+total_rows_crimes = merged_crime_DF.count()
+total_rows_arrests = merged_arrest_DF.count()
 total_rows_indicators = indicators_DF.count()
 
 
@@ -63,101 +107,101 @@ print(f"Total number of rows in indicators: {total_rows_indicators}")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Transformation-1: Rename Columns, Merge DFs
+# MAGIC ## Save unified files into a new container
+# MAGIC
+# MAGIC - create a container for transformed data - `transformed-data`
+# MAGIC - created _unifiedData_Crimes and `_unifiedData_Arrests` dircetories manually
+# MAGIC - Save files after unifying them 
+# MAGIC - finally rename auto generated file names
+# MAGIC - comment out saving code to avoid re-writing the data
+
+# COMMAND ----------
+
+# create a container for transformed data - transformed-data
+# created _unifiedData_Crimes and _unifiedData_Arrests dircetories manually
+# Save files after unifying them - then rename files 
+
+container_name = "transformed-data"
+storage_end_point = "crimeinchicago.dfs.core.windows.net" 
+
+uri = f"abfss://{container_name}@{storage_end_point}/"
+
+# merged_crime_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "_unifiedData_Crimes/")
+# merged_arrest_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "_unifiedData_Arrests/")
+# indicators_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "_renamed_Indicators/")
+
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ### re-name columns 
+# MAGIC ## Transformation-2: Merge Data from different sources (Enrichement)
+# MAGIC
+# MAGIC - read unified data for crimes and arrests
+# MAGIC - merge crimes with arrests
+# MAGIC - merge the result with socio eocnomic indicators
 
 # COMMAND ----------
 
+container_name = "transformed-data"
+storage_end_point = "crimeinchicago.dfs.core.windows.net" 
 
-# re name columns 
-crimes_DF = crimes_DF.withColumnRenamed("Case Number", "case_number")
-crimes_DF = crimes_DF.withColumnRenamed("Date", "date")
-crimes_DF = crimes_DF.withColumnRenamed("Primary Type", "primary_type")
-crimes_DF = crimes_DF.withColumnRenamed("Description", "description")
-crimes_DF = crimes_DF.withColumnRenamed("Location Description", "location_description")
-crimes_DF = crimes_DF.withColumnRenamed("Arrest", "arrest")
-crimes_DF = crimes_DF.withColumnRenamed("District", "district")
-crimes_DF = crimes_DF.withColumnRenamed("Community Area", "community_area")
+uri = f"abfss://{container_name}@{storage_end_point}/"
 
+# read transformed data from azure  
+crimes_DF = spark.read.csv(uri+"_unifiedData_Crimes/merged_crime_DF.csv", header=True)
+arrests_DF = spark.read.csv(uri+"_unifiedData_Arrests/merged_arrest_DF.csv", header=True)
+indicators_DF = spark.read.csv(uri+"_renamed_Indicators/indicators_renamed_DF.csv", header=True)
 
 
-arrests_DF = arrests_DF.withColumnRenamed("CASE NUMBER", "case_number")
-arrests_DF = arrests_DF.withColumnRenamed("ARREST DATE", "arrest_date")
-arrests_DF = arrests_DF.withColumnRenamed("RACE", "race")
-arrests_DF = arrests_DF.withColumnRenamed("CHARGE 1 DESCRIPTION", "charge_description")
-arrests_DF = arrests_DF.withColumnRenamed("CHARGE 1 TYPE", "charge_type")
-arrests_DF = arrests_DF.withColumnRenamed("CHARGE 1 CLASS", "charge_class")
-
-indicators_DF = indicators_DF.withColumnRenamed("ca", "community_area")
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ### Save renamed columns Data to Azure Blob
-
-# COMMAND ----------
-
-# Save files after renaming columns
-
-# uri = "abfss://data-engineering-project@crimeinchicago.dfs.core.windows.net/"
-# crimes_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "Crime2019_to_Present/")
-# arrests_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "Arrests/")
-# indicators_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "Socioeconomic Indicators/")
-
-# COMMAND ----------
-
-# MAGIC %md
-# MAGIC ## Enrich / Merge data - from 3 DFs 
-
-# COMMAND ----------
-
-from pyspark.sql.functions import col
-
-# merge crimes with arrests
+# merge DataSet1 and DataSet2 - (crimes with arrests)
 Crimes_Arrests_DF = crimes_DF.join(arrests_DF, on="case_number", how="inner")
 
 
 # merge Crimes_Arrests_DF with socio_economicIndicators 
+from pyspark.sql.functions import col
+
 
 # Cast community_area to Integer in both DataFrames
 Crimes_Arrests_DF = Crimes_Arrests_DF.withColumn("community_area", col("community_area").cast("int"))
 indicators_DF = indicators_DF.withColumn("community_area", col("community_area").cast("int"))
 
 #join on 'community_area' 
-merged_DF = Crimes_Arrests_DF.join(indicators_DF, on="community_area", how="inner")
-
-display(Crimes_Arrests_DF.limit(2))
-display(Crimes_Arrests_DF.count())
+merged_DF = Crimes_Arrests_DF.join(indicators_DF, on="community_area", how="left")
 
 # COMMAND ----------
 
-print(Crimes_Arrests_DF.dtypes)
-print("\n")
+# Print the number of columns in the DataFrame
+merged_columns_count = len(merged_DF.columns)
+crime_columns_count = len(merged_crime_DF.columns)
+arrests_columns_count = len(merged_arrest_DF.columns)
+indicators_columns_count = len(indicators_DF.columns)
 
-print(indicators_DF.dtypes)
+
+print(f"Number of columns in crimes data: {crime_columns_count}")
+print(f"Number of columns in arrests data: {arrests_columns_count}")
+print(f"Number of columns in indicators data: {indicators_columns_count}")
+print(f"Number of columns in merged data: {merged_columns_count}")
+
+count_rows_crimeArrests = Crimes_Arrests_DF.count()
+count_rows_MergedDF = merged_DF.count()
+
+print(f"\ncount_rows_crimeArrests : {count_rows_crimeArrests}")
+print(f"count_rows_MergedDF : {count_rows_MergedDF}")
+display(merged_DF)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC #### save the merged data 
+# MAGIC
+# MAGIC - save merged data into `transofrmed datasets` in a dir `_MERGED_ALL`
+# MAGIC - then rename it as `merged_DF.csv`
+# MAGIC - then comment out to avoid oevrwriting
 
 # COMMAND ----------
 
 # save merged file to azure blob
-# merged_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "_merged_crimes_arrests/")
-
-# COMMAND ----------
-
-crimes_count = crimes_DF.count()
-arrests_count = arrests_DF.count()
-merged_crime_arrests_count = Crimes_Arrests_DF.count()
-merged_DF_count = merged_DF.count()
-
-
-
-print(f"crimes_count: {crimes_count}")
-print(f"arrests_count: {arrests_count}")
-print(f"merged_crime_arrests: {merged_crime_arrests_count}")
-print(f"merged_DF_count: {merged_DF_count}")
+# merged_DF.coalesce(1).write.option('header', True).mode('overwrite').csv(uri + "_MERGED_ALL/")
 
 # COMMAND ----------
 
@@ -206,11 +250,7 @@ display(merged_DF.limit(4))
 
 # COMMAND ----------
 
-
-unique_community_areas = Crimes_Arrests_DF.select("community_area").distinct()
-
-display(unique_community_areas)
-
+print(merged_DF.dtypes)
 
 # COMMAND ----------
 
@@ -218,8 +258,8 @@ from pyspark.sql import functions as F
 
 # Group by 'district' and calculate felony, misdemeanor, and total counts
 cases_by_district = Crimes_Arrests_DF.groupBy("district").agg(
-    F.sum(F.when(F.col("charge_type") == "F", 1).otherwise(0)).alias("felony_cases"),  # Felony cases
-    F.sum(F.when(F.col("charge_type") == "M", 1).otherwise(0)).alias("misdemeanor_cases"),  # Misdemeanor cases
+    F.sum(F.when(F.col("charge_1_type") == "F", 1).otherwise(0)).alias("felony_cases"),  # Felony cases
+    F.sum(F.when(F.col("charge_1_type") == "M", 1).otherwise(0)).alias("misdemeanor_cases"),  # Misdemeanor cases
     F.count("*").alias("total_cases")  # Total cases per district
 )
 
@@ -244,7 +284,9 @@ crime_arrest_counts = Crimes_Arrests_DF.groupBy("district").agg(
 
 
 sorted_crime_arrest_counts = crime_arrest_counts.orderBy(F.col("total_crimes").desc())
-display(sorted_crime_arrest_counts)
+
+
+display(sorted_crime_arrest_counts.select("district", "arrest_count"))
 
 # COMMAND ----------
 
@@ -257,7 +299,7 @@ display(crime_incident_counts.limit(15))
 
 
 # top felony districts
-felony_data = Crimes_Arrests_DF.filter(Crimes_Arrests_DF["charge_type"] == "F")
+felony_data = Crimes_Arrests_DF.filter(Crimes_Arrests_DF["charge_1_type"] == "F")
 
 
 top_felony_districts = felony_data.groupBy("district").count().withColumnRenamed("count", "felony_count").orderBy("felony_count", ascending=False)
@@ -267,7 +309,7 @@ display(top_felony_districts)
 # COMMAND ----------
 
 # top misdemenor districts
-misdemenor_data = Crimes_Arrests_DF.filter(Crimes_Arrests_DF["charge_type"] == "M")
+misdemenor_data = Crimes_Arrests_DF.filter(Crimes_Arrests_DF["charge_1_type"] == "M")
 
 
 top_misdemenor_districts = misdemenor_data.groupBy("district").count().withColumnRenamed("count", "midemenor_count").orderBy("midemenor_count", ascending=False)
@@ -429,6 +471,16 @@ crime_count_by_race = merged_DF.groupBy("race").agg(
 crime_count_by_race_sorted = crime_count_by_race.orderBy(col("crime_count").desc())
 display(crime_count_by_race_sorted)
 
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ## Save all of these Aggregated datasets
+# MAGIC
+# MAGIC - save all aggregated datasets in `_AGGREGATED_DATA` dir within `transformed-data`
+# MAGIC - two ways to save:
+# MAGIC   - manually download and upload ( preferred for this project)
+# MAGIC   - save programatically ( generates lots of files)
 
 # COMMAND ----------
 
