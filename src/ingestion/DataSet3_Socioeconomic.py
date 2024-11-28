@@ -5,8 +5,11 @@ from functions.upload_ADLs import upload_geojson_to_adls
 import json
 
 
-def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.geojson",
-                                BASE_URL="https://data.cityofchicago.org/resource"):
+def ingest_disadvantaged_areas_geojson(END_POINT="2ui7-wiq8.geojson",
+                                       BASE_URL="https://data.cityofchicago.org/resource",
+                                       STORAGE_ACCT="crimeinchicago",
+                                       FILE_SYSTEM_NAME="input-ingested-raw",
+                                       DIR_NAME="Disadvanatged_Areas"):
     """
     Ingests the 'Socioeconomic areas' dataset and uploads to Azure Data Lake Storage (ADLS).
 
@@ -35,7 +38,9 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.geojson",
     # Construct the full URL
     url = f"{BASE_URL}/{END_POINT}"
 
-    geojson_data = fetch_geojson_from_api(url, api_key_id, api_secret)
+    geojson_data = fetch_geojson_from_api(url,
+                                          api_key_id,
+                                          api_secret)
 
     # Check if the response contains data
     if geojson_data:
@@ -50,8 +55,8 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.geojson",
 
     #  file label
     geojson_file_label = "socioecon_disadvantaged_Areas.geojson"
-    SAVE_PATH = 'RawData/DataSet3'
-    geojson_file_path = f"{SAVE_PATH}/{geojson_file_label}"
+    loaclSavePath = 'RawData/DataSet3'
+    geojson_file_path = f"{loaclSavePath}/{geojson_file_label}"
 
     with open(geojson_file_path, "w") as f:
         json.dump(geojson_data, f)  # Save GeoJSON data as a JSON file
@@ -60,13 +65,16 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.geojson",
     with open("sas.config") as f:
         sas_key = f.readline().strip()
 
-    storageAcctName = "crimeinchicago"
-    fileSysName = "data-engineering-project"
-    dirName = "Socioeconomic Areas"
+    # storage account name
+    storageAcctName = STORAGE_ACCT
+    # name of continer for input data - names rules apply
+    Input_fileSysName = FILE_SYSTEM_NAME
+    # name of directory within a container
+    dirName = DIR_NAME
 
     directory = init_adls_directory(storageAcctName,
                                     sas_key,
-                                    fileSysName,
+                                    Input_fileSysName,
                                     dirName)
 
     # Upload to ADLS
@@ -76,4 +84,4 @@ def ingest_socioecon_areas_data(END_POINT="2ui7-wiq8.geojson",
 # Allow this script to be run independently or imported
 if __name__ == "__main__":
 
-    ingest_socioecon_areas_data()
+    ingest_disadvantaged_areas_geojson()

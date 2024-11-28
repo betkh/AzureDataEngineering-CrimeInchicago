@@ -24,6 +24,23 @@ def crimes_fileLabel(df, date_column="date", dataSource="Data"):
     return label
 
 
+def crimes_fileLabel2(df, date_column="date", dataSource="Data"):
+    """Generate a file label based on the date range in the data or current date for empty DataFrames."""
+    if df.empty:
+        # Use current datetime for empty DataFrame
+        current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        label = f"{dataSource}_{current_datetime}_0_rows.csv"
+    else:
+        # Convert the date column to datetime
+        df[date_column] = pd.to_datetime(df[date_column])
+        min_date = df[date_column].min().strftime("%Y-%m-%d")
+        max_date = df[date_column].max().strftime("%Y-%m-%d")
+        max_rows = len(df)
+        label = f"{dataSource}_{min_date}_to_{max_date}_{max_rows}_rows.csv"
+
+    return label
+
+
 def socio_fileLabel(df, label_):
 
     now = datetime.now()

@@ -1,21 +1,18 @@
 
 from functions.setup import load_config, init_adls_directory, save_and_load_csv
-from functions.pull_data import fetch_data_from_api
-from functions.timeLabels import crimes_fileLabel
+from functions.pull_data import fetch_data_from_api2
+from functions.timeLabels import crimes_fileLabel2
 from functions.upload_ADLs import upload_dataframe_to_adls
 
 
 def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
                         BASE_URL="https://data.cityofchicago.org/resource",
-                        MAX_RECORDS=300000,
-                        COLUMN_FILTER=["arrest_date", "race", "charge_1_description", "charge_1_type", "charge_1_class",
-                                       "charge_2_description", "charge_2_type", "charge_2_class",
-                                       "charge_3_description", "charge_3_type", "charge_3_class",
-                                       "charge_4_description", "charge_4_type", "charge_4_class"],
-                        ROW_FILTER="arrest_date>='2024-10-26T00:00:00' AND arrest_date<='2024-11-24T00:00:00'",
-                        SAVE_PATH='RawData/DataSet2',
-                        STORAGE_ACCT_NAME="crimeinchicago",
-                        FILE_SYSTEM_NAME="data-engineering-project",
+                        MAX_RECORDS=None,
+                        COLUMN_FILTER=["case_number", "arrest_date", "race",
+                                       "charge_1_description", "charge_1_type", "charge_1_class"],
+                        ROW_FILTER="(arrest_date>='2024-01-01T00:00:00' AND arrest_date<='2024-11-27T00:00:00') ",
+                        STORAGE_ACCT="crimeinchicago",
+                        FILE_SYSTEM_NAME="input-ingested-raw",
                         DIR_NAME="Arrests"):
     """
     Ingests the 'Arrests' dataset and uploads to Azure Data Lake Storage (ADLS).
@@ -52,12 +49,12 @@ def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
     row_filter = ROW_FILTER
 
     # fetch data
-    df = fetch_data_from_api(url,
-                             api_key_id,
-                             api_secret,
-                             columns=column_filter,
-                             row_filter=row_filter,
-                             max_records=MAX_RECORDS)
+    df = fetch_data_from_api2(url,
+                              api_key_id,
+                              api_secret,
+                              columns=column_filter,
+                              row_filter=row_filter,
+                              max_records=MAX_RECORDS)
 
     print("[Success] - Data fetched successfully and stored in df")
     print("\nData insights:")
@@ -69,31 +66,63 @@ def ingest_Arrests_Data(END_POINT="dpt3-jri9.json",
     print(f"Number of columns: {len(df.columns)}")
     print(f"Number of rows: {len(df)}")
 
-    # Generate file label based on the date range
-    csv_file_label = crimes_fileLabel(
-        df, date_column="arrest_date", dataSource="Arrests")
-    print("\n[Success] - Generated file label:", csv_file_label)
+    if len(df) == 0:
 
-    # save data as csv
-    df_read = save_and_load_csv(df, SAVE_PATH,
-                                csv_file_label)
+        print("No New Data, come back later!")
+        pass
 
-    # Initialize ADLS and upload data
-    with open("sas.config") as f:
-        sas_key = f.readline().strip()
+    else:
 
-    storageAcctName = STORAGE_ACCT_NAME
-    fileSysName = FILE_SYSTEM_NAME
-    dirName = DIR_NAME
+        # Generate file label based on the date range
+        csv_file_label = crimes_fileLabel2(
+            df, date_column="arrest_date", dataSource="Arrests")
+        print("\n[Success] - Generated file label:", csv_file_label)
 
-    directory = init_adls_directory(storageAcctName,
-                                    sas_key,
-                                    fileSysName,
-                                    dirName)
+        # save data as csv
+        loaclSAVE_PATH = 'RawData/DataSet2'
+        df_read = save_and_load_csv(df, loaclSAVE_PATH,
+                                    csv_file_label)
 
-    upload_dataframe_to_adls(directory, df_read, csv_file_label)
+        # Initialize ADLS and upload data
+        with open("sas.config") as f:
+            sas_key = f.readline().strip()
+
+        # storage account name
+        storageAcctName = STORAGE_ACCT
+        # name of continer for input data - names rules apply
+        Input_fileSysName = FILE_SYSTEM_NAME
+        # name of directory within a container
+        dirName = DIR_NAME
+
+        directory = init_adls_directory(storageAcctName,
+                                        sas_key,
+                                        Input_fileSysName,
+                                        dirName)
+
+        upload_dataframe_to_adls(directory, df_read, csv_file_label)
 
 
 # Allow this script to be run independently or imported
 if __name__ == "__main__":
-    ingest_Arrests_Data(MAX_RECORDS=210000)
+
+    # ingest data for last 5+ years -  2019, 2020, 2021, 2022, 2023 & current year
+
+    # start Date, End Date, corresponding MAX_RECORDS
+    DateFilter = [
+        ("2019-01-01T00:00:00", "2019-12-31T23:45:00", 51000),
+        ("2020-01-01T00:00:00", "2020-12-31T23:45:00", 32000),
+        ("2021-01-01T00:00:00", "2021-12-31T23:45:00", 25000),
+        ("2022-01-01T00:00:00", "2022-12-31T23:45:00", 25500),
+        ("2023-01-01T00:00:00", "2023-12-31T23:45:00", 29000),
+        ("2024-01-01T00:00:00", "2024-11-27T14:00:00", 30000)
+    ]
+
+    recentDataFilter = [("2024-11-27T14:00:00", "2024-12-31T14:23:40", 60000),]
+
+    for start_date, end_date, max_records in recentDataFilter:
+
+        # filter by date
+        rowFilter = f"(arrest_date>='{start_date}' AND arrest_date<='{end_date}')"
+
+        # ingest arrests data
+        ingest_Arrests_Data(ROW_FILTER=rowFilter, MAX_RECORDS=max_records)
