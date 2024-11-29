@@ -12,6 +12,8 @@ The project design follows the Data Engineering lifecycle, with clear documentat
 - **Transformation**
 - **Serving (Analysis)**
 
+![Implementation](arch.png)
+
 ## Project Setup
 
 ### Part I: Local Machine Virtual Environment
@@ -36,8 +38,6 @@ pip install --user pipenv
 
 - created a resourcegroup, storageAccount, KeyVault and Azure DataBricks
 - programmatically ingested data from the sources using api into azure blob storage
-
-![Implementation](impl.jpg)
 
 ---
 
