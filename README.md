@@ -14,7 +14,7 @@ The analysis seeks to provide actionable insights to policymakers, enabling them
 
 The project ingests four datasets from APIs into Azure Blob Storage using Python in a Pipenv environment, with data transformation and analysis performed in Azure Databricks. Final analysis and visualization are done in Power BI and Jupyter Notebook, with all code synchronized to a GitHub repository.
 
-![Implementation](arch.png)
+![Implementation](draw_io_visulas/arch.png)
 
 # 3. How to run the code :
 
@@ -44,7 +44,7 @@ pip install --user pipenv
 
 Within azure cloud a storage account, key vault and Azure data bricks workspace is created.
 
-![Implementation](azuresetup.png)
+![Implementation](/draw_io_visulas/azuresetup.png)
 
 # 4. Implementation Steps (Road map)
 
@@ -124,7 +124,7 @@ In the transformation phase, the data is unified, merged, and aggregated based o
 
 Data Lineage as data goes through transformation steps.
 
-<img src="dataLineage.png" width="100%">
+<img src="/draw_io_visulas/dataLineage.png" width="100%">
 
 ## III. SERVING/ANALYSIS
 
