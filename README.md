@@ -46,7 +46,7 @@ pip install --user pipenv
 
 Within azure cloud a storage account, key vault and Azure data bricks workspace is created.
 
-![Implementation](/draw_io_visulas/azuresetup.png)
+![Implementation](draw_io_visulas/azuresetup.png)
 
 # 4. Implementation Steps (Road map)
 
