@@ -172,7 +172,7 @@ Data Lineage as data goes through transformation steps.
 - The most common crime types are Battery, narcotics, weapons violations and theft.
 - Socio economic indicators seem to have a positive correlation with crime as socio-economically disadvantaged areas experience more crime.
 
-### Actions for call based on Analysis Insights:
+### Call for Action based on Analysis Insights:
 
 - Pay more attention or allocate resources for specific police districts such as District 11 or on weekends.
 - To prevent most crime incidents that happen on the street, police must act.
