@@ -18,6 +18,9 @@ The project ingests four datasets from APIs into Azure Blob Storage using Python
 
 # 3. How to run the code :
 
+![Implementation](draw_io_visulas/arch.png)
+![projectsTRUCTURE](draw_io_visulas/project_structure.png)
+
 ### step-1 : setup Local Machine Virtual Environment
 
 A Pipenv virtual environment is set up on the local machine to run the ingestion code, with necessary Python packages installed to meet dependencies. The `Pipfile` or `Pipfile.lock` can be used to recreate the environment, and a table below shows some of the installed packages and their use cases.
