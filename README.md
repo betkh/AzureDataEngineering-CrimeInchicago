@@ -1,22 +1,26 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=16374176&assignment_repo_type=AssignmentRepo)
 
-# CS622 - Data Engineering Project
+# Insights for Chicago to Improve Public Safet
 
-## Overview: Insights for Chicago to Improve Public Safety
+### (CS622 - Data Engineering Project)
 
-This project aims to support data-driven public safety initiatives for Chicago. Utilizing three separate public datasets from [Data.gov](https://www.data.gov/), the project ingests, transforms, and analyzes data to unlock insights that enhance public safety.
+# 1. Introduction
 
-The project design follows the Data Engineering lifecycle, with clear documentation of each phase:
+This project aims to support data-driven public safety initiatives for Chicago by applying data engineering principles, leveraging public datasets from [Data.gov](https://www.data.gov/), cloud and technology. Through data ingestion, transformation, and analysis, the project aims to uncover valuable insights that can contribute to improving public safety.
 
-- **Ingestion**
-- **Transformation**
-- **Serving (Analysis)**
+The analysis seeks to provide actionable insights to policymakers, enabling them to identify specific geographic areas that require attention and make informed decisions to enhance public safety effectively.
+
+# 2. Overall Architecture
+
+The project ingests four datasets from APIs into Azure Blob Storage using Python in a Pipenv environment, with data transformation and analysis performed in Azure Databricks. Final analysis and visualization are done in Power BI and Jupyter Notebook, with all code synchronized to a GitHub repository.
 
 ![Implementation](arch.png)
 
-## Project Setup
+# 3. How to run the code :
 
-### Part I: Local Machine Virtual Environment
+### step-1 : setup Local Machine Virtual Environment
+
+A Pipenv virtual environment is set up on the local machine to run the ingestion code, with necessary Python packages installed to meet dependencies. The `Pipfile` or `Pipfile.lock` can be used to recreate the environment, and a table below shows some of the installed packages and their use cases.
 
 **Install Pipenv**: Use the following command to install Pipenv:
 
@@ -34,20 +38,25 @@ pip install --user pipenv
 
 - [pipenv documentation](https://pipenv.pypa.io/en/latest/)
 
-### Part-II: Azure Cloud setup
-
-- created a resourcegroup, storageAccount, KeyVault and Azure DataBricks
-- programmatically ingested data from the sources using api into azure blob storage
-
 ---
 
-## STEP-1: Ingestion
+### step-2 : Setup Azure Cloud
 
-### Three Data Sources
+Within azure cloud a storage account, key vault and Azure data bricks workspace is created.
 
-This project uses three datasets from [Data.gov](https://www.data.gov/), each of which provides valuable information to support analysis and unlock insights to improve public safety in Chicago.
+![Implementation](azuresetup.png)
 
-### Source #1: Crimes - 2001 to Present - Dynamic data
+# 4. Implementation Steps (Road map)
+
+The project follows the data engineering lifecycle, including ingestion, transformation, and analysis. To see detailed implementation steps, visit the `ImplementationSteps_and_Report.pdf` file within this repo.
+
+## I. INGESTION
+
+Data is ingested programmatically from four sources (shown below) into Azure Blob Storage using batch approach. Containers within Azure storage are also programmatically created using `azure-storage-file-datalake` python package. Row/column filters are applied to ingest only relevant data, avoid null values and aovid API throtteling.
+
+To start ingestion, register on `Data.gov` to create an API key and store it in a config file. Also copy SAS key to a config file to be able to write to azure storage programatically. Add config files to `.gitignore` for security.
+
+### DataSource #1: Crimes - 2001 to Present - Dynamic data
 
 | Attribute                 | Details                                                                                                                                                                                |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -62,7 +71,7 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Columns**               | `22`                                                                                                                                                                                   |
 | **DateRange**             | `01/01/2001` - `present`                                                                                                                                                               |
 
-### Source #2: Arrests - Dynamic data
+### DataSource #2: Arrests - Dynamic data
 
 | Attribute                 | Details                                                                                                                                                  |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -77,7 +86,7 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Columns**               | `24`                                                                                                                                                     |
 | **DateRange**             | `01/01/2014` - `present`                                                                                                                                 |
 
-### Source #3: Socioeconomically Disadvantaged Areas
+### DataSource #3: Socioeconomically Disadvantaged Areas
 
 | Property                  | Details                                                                                                                                                                                                                                                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -92,7 +101,7 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Rows**                  | `254`                                                                                                                                                                                                                                                  |
 | **Columns**               | `1`                                                                                                                                                                                                                                                    |
 
-### Source #4: Socioeconomic Indicators
+### DataSource #4: Socioeconomic Indicators
 
 | Property                  | Details                                                                                                                                                                                                                                                        |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -107,64 +116,66 @@ This project uses three datasets from [Data.gov](https://www.data.gov/), each of
 | **Rows**                  | `78`                                                                                                                                                                                                                                                           |
 | **Columns**               | `9`                                                                                                                                                                                                                                                            |
 
-### Ingestion Steps
+## II. TRANSFORMATION (Unify, Join, Aggregate data)
 
-Each dataset is ingested and stored in Azure Blob Storage in `.csv` format, where it is subsequently cleaned, enriched, and transformed for analysis and reporting.
+In the transformation phase, the data is unified, merged, and aggregated based on common attributes for analysis. Finally, the transformed data is analyzed in Power BI for dashboards and in Jupyter Notebook for visualizations, with the results stored back in Azure Blob Storage for serving.
 
-1. **Sign Up and API Key Creation**
+### Data Lineage
 
-   - Register on Data.gov and create new API Keys using the "SignUpforAppToken" option.
-   - **Security:** store the api key in config file.
+Data Lineage as data goes through transformation steps.
 
-2. **Data Retrieval via API**
+<img src="dataLineage.png" width="100%">
 
-   - Pull data via the Data.gov API.
-   - **Libraries Required:** Install `pandas`, `soapy`, `jupyter`, and `azure-storage-file-datalake`.
+## III. SERVING/ANALYSIS
 
-3. **Programmatic Storage**
+### Guiding Questions for Analysis
 
-   - create a Directory within a Container in Azure Blob Storage programmatically.
-   - Store datasets in `.csv` format for easy access for next step.
+- What areas with high crime rates relative to socioeconomic factors?
+- How crime trended over years, Months?
+- Is crime more common towards weekends or workdays?
+- What are High-risk districts that need more attention?
+- Does poor socio economic indicators imply high crime rate?
 
----
+### Visuals from Analysis via Power-BI
 
-## STEP-2: Transformation
+<img src="src/Serving_Analysis/PowerBI/PowerBI-Crime-vs-Categories.png" width="100%">
+<img src="src/Serving_Analysis/PowerBI/PowerBI-Crime-vs-Indicators.png" width="100%">
+<img src="src/Serving_Analysis/PowerBI/PowerBI-Crime-vs-Time.png" width="100%">
 
-### Transformation Steps
+### Visuals from Analysis via Jupyter Notebook
 
-1. **Data Cleaning and Preprocessing**
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_arrests_due_to_felony.png" width="100%">
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_arrests_due_to_misdemenor.png" width="100%">
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_common_crime_types.png" width="100%">
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_crime_and_race.png" width="100%">
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_top_crime_spots.png" width="100%">
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_arrest_counts_by_district.png" width="100%">
 
-   - data modeling
-   - handling missing values
-   - standardizing formats (e.g. Date formats)
-   - filtering data to match specific criteria for analysis.
+<img src="visualizations_fromInitialAnalysis/DataSet1_Visuals/TemporalAnalysis_crimesIncidents_overYears.png">
 
-2. **Enrich Data**
+#### Socio-economic indicators vs disadvantaged areas in chicago
 
-   - Enrich crime data by merging with census and socioeconomic data
-   - provides contextual insights such as crime trends in relation to socioeconomic factors.
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/map_heatmap_of_six.jpg" width="100%">
+<img src="src/Serving_Analysis/JupyterNotebook/imgs/map_disadvanatged_areas.png" width="100%">
 
-3. **Data formats `.parquet` format**
-   - `.parquet` suitable data format optimized for analytics.
-   - `.csv` suitable for distribution
+### Analysis Insights:
 
----
+- Police District 11 in Chicago has highest rate of arrests.
+- Most of the crime incidents happen on the street.
+- Crime rates tend to rise towards weekend days of Friday, Saturday and Sunday.
+- Crime rates seem higher towards march and April based on analysis of 5-year aggregated data.
+- The most common crime types are Battery, narcotics, weapons violations and theft.
+- Socio economic indicators seem to have a positive correlation with crime as socio-economically disadvantaged areas experience more crime.
 
-## STEP-3: Serving - Analysis Exploratory Data Analysis (EDA)
+### Actions for call based on Analysis Insights:
 
-- SQL-based transformations
-- exploratory data analysis (EDA)
+- Pay more attention or allocate resources for specific police districts such as District 11 or on weekends.
+- To prevent most crime incidents that happen on the street, police must act.
+- Pay attention to most common types of crimes such as Battery, narcotics, weapons violations and theft.
+- Pay attention to Socio economically disadvantaged areas to increase Per-Capita income and education level to proactively reduce crime rates.
 
-#### Guiding Questions for Analysis
+### Further objectives to improve the project
 
-Key insights derived from the project aim to highlight:
-
-- Areas with high crime rates relative to socioeconomic factors.
-- Monthly and annual crime trends.
-- High-risk neighborhoods to inform public safety improvements.
-
-### Preliminary Analysis Results
-
-<img src="viz1.png" alt="High Crime Districts" height="250">
-<img src="viz2.png" alt="Top10 Crime Types" height="250">
-<img src="viz3.png" alt="TemporalAnalysis_arrestsOver_5years" width="595">
+- Automate ingestion with automation tools like Azure data factory or Airflow.
+- Automatic deployment of cloud using Infrastructure as a code (Terraform)
+- Unit testing of code modules
