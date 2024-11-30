@@ -4,6 +4,10 @@
 
 ### (CS622 - Data Engineering Project)
 
+#### Project Presentation Video:
+
+[![Watch the video](draw_io_visulas/YT_thumbnail.png)](https://youtu.be/HIUDsTWr8i4)
+
 # 1. Introduction
 
 This project aims to support data-driven public safety initiatives for Chicago by applying data engineering principles, leveraging public datasets from [Data.gov](https://www.data.gov/), cloud and technology. Through data ingestion, transformation, and analysis, the project aims to uncover valuable insights that can contribute to improving public safety.
