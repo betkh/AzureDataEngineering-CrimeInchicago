@@ -18,7 +18,7 @@ The project ingests four datasets from APIs into Azure Blob Storage using Python
 
 # 3. How to run the code :
 
-#### file structure
+### File structure:
 
 ![projectsTRUCTURE](draw_io_visulas/project_structure.png)
 
