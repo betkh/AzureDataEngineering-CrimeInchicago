@@ -1,0 +1,106 @@
+<mxfile host="65bd71144e">
+    <diagram id="chupZ754jFWGJp726bck" name="Page-1">
+        <mxGraphModel dx="1190" dy="100" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="41" value="" style="swimlane;startSize=0;strokeColor=#808080;strokeWidth=1;" parent="1" vertex="1">
+                    <mxGeometry x="392" y="484" width="493" height="397" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="&lt;font style=&quot;font-size: 11px;&quot; color=&quot;#333333&quot;&gt;MISCROSOFT AZURE&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="41" vertex="1">
+                    <mxGeometry x="371" width="122" height="17" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="swimlane;startSize=0;strokeColor=#808080;strokeWidth=1;dashed=1;" parent="41" vertex="1">
+                    <mxGeometry x="12.5" y="253" width="468" height="134" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="swimlane;startSize=0;strokeColor=#808080;strokeWidth=1;" parent="14" vertex="1">
+                    <mxGeometry x="64.5" y="31" width="339" height="93" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=none;strokeColor=#007FFF;" parent="3" vertex="1">
+                    <mxGeometry x="44" y="11" width="60" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#007FFF;shape=mxgraph.azure.storage_blob;" parent="3" vertex="1">
+                    <mxGeometry x="56" y="35" width="36" height="29" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=none;strokeColor=#007FFF;" parent="3" vertex="1">
+                    <mxGeometry x="122" y="11" width="60" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#007FFF;shape=mxgraph.azure.storage_blob;" parent="3" vertex="1">
+                    <mxGeometry x="136.5" y="35" width="36" height="29" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=none;strokeColor=#007FFF;" parent="3" vertex="1">
+                    <mxGeometry x="207" y="11" width="60" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#007FFF;shape=mxgraph.azure.storage_blob;" parent="3" vertex="1">
+                    <mxGeometry x="219" y="35" width="36" height="29" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="&lt;font color=&quot;#333333&quot;&gt;RAW&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="3" vertex="1">
+                    <mxGeometry x="55" y="15" width="37" height="14" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="&lt;font color=&quot;#333333&quot;&gt;Clean/Enriched&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="3" vertex="1">
+                    <mxGeometry x="132.5" y="15" width="37" height="14" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="&lt;font color=&quot;#333333&quot;&gt;Results&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="3" vertex="1">
+                    <mxGeometry x="218" y="15" width="37" height="14" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="&lt;font color=&quot;#333333&quot;&gt;Azure Blob Storage&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="3" vertex="1">
+                    <mxGeometry x="125" y="76" width="79" height="17" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="&lt;font color=&quot;#333333&quot;&gt;AZURE STORAGE ACCOUNT&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="14" vertex="1">
+                    <mxGeometry x="361" width="107" height="17" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="" style="swimlane;startSize=0;strokeColor=#808080;strokeWidth=1;dashed=1;" parent="41" vertex="1">
+                    <mxGeometry x="12.5" y="28" width="468" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="&lt;font color=&quot;#333333&quot;&gt;AZURE DATABRICKS WORKSPACE&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="39" vertex="1">
+                    <mxGeometry x="341" width="127" height="17" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="" style="swimlane;startSize=0;strokeColor=#808080;strokeWidth=1;dashed=1;" parent="41" vertex="1">
+                    <mxGeometry x="11" y="149" width="468" height="61" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="&lt;font color=&quot;#333333&quot;&gt;AZURE KEY VAULT&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="26" vertex="1">
+                    <mxGeometry x="397" width="71" height="17" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#999999;strokeWidth=1;fontSize=11;fontColor=#666666;elbow=vertical;shape=flexArrow;startArrow=block;" parent="41" source="3" target="26" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" style="edgeStyle=orthogonalEdgeStyle;shape=flexArrow;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.494;entryY=1.057;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#999999;strokeWidth=1;fontSize=11;fontColor=#666666;startArrow=block;elbow=vertical;" parent="41" source="26" target="39" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" style="edgeStyle=entityRelationEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;strokeWidth=1;strokeColor=#999999;elbow=vertical;startArrow=none;endArrow=block;endFill=1;" parent="1" source="45" target="14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#999999;strokeWidth=1;fontSize=11;fontColor=#666666;startArrow=blockThin;startFill=1;endArrow=block;endFill=1;elbow=vertical;" parent="1" source="43" target="57" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="" style="verticalLabelPosition=bottom;sketch=0;aspect=fixed;html=1;verticalAlign=top;strokeColor=none;align=center;outlineConnect=0;shape=mxgraph.citrix.laptop_2;fontSize=11;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="16" y="659" width="142.15" height="106" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="&lt;font color=&quot;#666666&quot;&gt;AcessKeys&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="249.99999999999997" y="716" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="" style="edgeStyle=entityRelationEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;strokeWidth=1;strokeColor=#999999;elbow=vertical;endArrow=none;startArrow=blockThin;startFill=1;" parent="1" source="43" target="45" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="178.14999999999986" y="627" as="sourcePoint"/>
+                        <mxPoint x="402.5" y="804" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="45" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/other/SSH_Keys.svg;strokeColor=#666666;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="255.6" y="748" width="40.8" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#999999;strokeWidth=1;fontSize=11;fontColor=#666666;startArrow=blockThin;startFill=1;endArrow=block;endFill=1;elbow=vertical;" parent="1" source="57" target="39" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="" style="swimlane;startSize=0;strokeColor=#666666;fontSize=11;fontColor=#666666;fillColor=none;rounded=1;dashed=1;" parent="1" vertex="1">
+                    <mxGeometry x="-24" y="484" width="320.4" height="93" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.github_code;pointerEvents=1;fontSize=11;fontColor=#666666;" parent="57" vertex="1">
+                    <mxGeometry x="220.6" y="4" width="36" height="36" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="&lt;font style=&quot;font-size: 11px;&quot; color=&quot;#333333&quot;&gt;GIT Repo&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeWidth=1;fontSize=7;fontStyle=1" parent="57" vertex="1">
+                    <mxGeometry x="232.39999999999995" y="4" width="122" height="17" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
