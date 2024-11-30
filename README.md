@@ -18,7 +18,6 @@ The project ingests four datasets from APIs into Azure Blob Storage using Python
 
 # 3. How to run the code :
 
-![Implementation](draw_io_visulas/arch.png)
 ![projectsTRUCTURE](draw_io_visulas/project_structure.png)
 
 ### step-1 : setup Local Machine Virtual Environment
@@ -127,7 +126,7 @@ In the transformation phase, the data is unified, merged, and aggregated based o
 
 Data Lineage as data goes through transformation steps.
 
-<img src="/draw_io_visulas/dataLineage.png" width="100%">
+<img src="draw_io_visulas/dataLineage.png" width="100%">
 
 ## III. SERVING/ANALYSIS
 
