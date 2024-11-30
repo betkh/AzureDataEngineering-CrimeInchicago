@@ -48,7 +48,7 @@ Within azure cloud a storage account, key vault and Azure data bricks workspace 
 
 # 4. Implementation Steps (Road map)
 
-The project follows the data engineering lifecycle, including ingestion, transformation, and analysis. To see detailed implementation steps, visit the `ImplementationSteps_and_Report.pdf` file within this repo.
+The project follows the data engineering lifecycle, including ingestion, transformation, and analysis. To see detailed implementation steps, visit the [ImplementationSteps_and_Report.pdf](https://github.com/dfroslie-ndsu-org/f23-project-BeTKH/blob/main/ImplementationSteps_and_Report.pdf) file within this repo.
 
 ## I. INGESTION
 
@@ -143,6 +143,8 @@ Data Lineage as data goes through transformation steps.
 <img src="src/Serving_Analysis/PowerBI/PowerBI-Crime-vs-Time.png" width="100%">
 
 ### Visuals from Analysis via Jupyter Notebook
+
+[view Jupyter Notebook](https://github.com/dfroslie-ndsu-org/f23-project-BeTKH/blob/main/src/Serving_Analysis/JupyterNotebook/Crime_Analsysis_Chicago.ipynb)
 
 <img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_arrests_due_to_felony.png" width="100%">
 <img src="src/Serving_Analysis/JupyterNotebook/imgs/bar_arrests_due_to_misdemenor.png" width="100%">
