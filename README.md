@@ -50,7 +50,7 @@ pip install --user pipenv
 
 ### step-2 : Setup Azure Cloud
 
-Within azure cloud a storage account, key vault and Azure data bricks workspace is created.
+Within azure cloud, create a storage account, key vault and Azure data bricks (ADB). Then setup ADB workspace to access blob storages using access keys.
 
 ![Implementation](draw_io_visulas/azuresetup.png)
 
