@@ -56,7 +56,7 @@ Within azure cloud, create a storage account, key vault and Azure data bricks (A
 
 # 4. Implementation Steps (Road map)
 
-The project follows the data engineering lifecycle, including ingestion, transformation, and analysis. To see detailed implementation steps, visit the [ImplementationSteps_and_Report.pdf](https://github.com/dfroslie-ndsu-org/f23-project-BeTKH/blob/main/ImplementationSteps_and_Report.pdf) file within this repo.
+The project follows the data engineering lifecycle, including ingestion, transformation, and analysis. To see detailed implementation steps, visit the [ImplementationSteps_and_Report.pdf](https://github.com/betkh/AzureDataEngineering-CrimeInchicago/blob/main/ImplementationSteps_and_Report.pdf) file within this repo.
 
 ## I. INGESTION
 
@@ -124,9 +124,8 @@ To start ingestion, register on `Data.gov` to create an API key and store it in 
 | **Rows**                  | `78`                                                                                                                                                                                                                                                           |
 | **Columns**               | `9`                                                                                                                                                                                                                                                            |
 
-
-
 ### ingestion preview:
+
 https://github.com/user-attachments/assets/b8a19c61-bc83-4a87-b9fa-502bb2845c23
 
 ## II. TRANSFORMATION (Unify, Join, Aggregate data)
@@ -194,9 +193,3 @@ Data Lineage as data goes through transformation steps.
 - Automate ingestion with automation tools like Azure data factory or Airflow.
 - Automatic deployment of cloud using Infrastructure as a code (Terraform)
 - Unit testing of code modules
-
-
-
-
-
-
