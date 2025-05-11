@@ -6,7 +6,11 @@
 
 #### Project Presentation Video:
 
-[![Watch the video](draw_io_visulas/YT_thumbnail.png)](https://youtu.be/rVOvu1YMY58)
+[![Watch the video](draw_io_visulas/yt1.png)](https://youtu.be/rVOvu1YMY58)
+
+#### Project initiation Video:
+
+[![Watch the video](draw_io_visulas/yt2.png)](https://youtu.be/gHu9x34CnEI)
 
 # 1. Introduction
 
