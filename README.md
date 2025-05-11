@@ -6,7 +6,7 @@
 
 #### Project Presentation Video:
 
-[![Watch the video](draw_io_visulas/YT_thumbnail.png)](https://youtu.be/HIUDsTWr8i4)
+[![Watch the video](draw_io_visulas/YT_thumbnail.png)](https://youtu.be/rVOvu1YMY58)
 
 # 1. Introduction
 
