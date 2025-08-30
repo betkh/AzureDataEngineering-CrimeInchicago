@@ -14,8 +14,10 @@ plotly = "*"
 folium = "*"
 geopandas = "*"
 matplotlib = "*"
-boto3 = "*"
 pandas = "*"
+boto3 = "*"
+python-dotenv = "*"
+dotenv = "*"
 
 [dev-packages]
 
