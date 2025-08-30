@@ -4,6 +4,11 @@ import io
 from botocore.exceptions import ClientError
 
 
+"""
+UPLOAD data to AWS S3
+"""
+
+
 def init_s3_client(aws_access_key_id, aws_secret_access_key, aws_region):
     """Initialize the AWS S3 client."""
     try:
@@ -35,9 +40,11 @@ def create_s3_bucket_if_not_exists(s3_client, bucket_name, region):
                 else:
                     s3_client.create_bucket(
                         Bucket=bucket_name,
-                        CreateBucketConfiguration={'LocationConstraint': region}
+                        CreateBucketConfiguration={
+                            'LocationConstraint': region}
                     )
-                print(f"[Success] - S3 bucket '{bucket_name}' created successfully.")
+                print(
+                    f"[Success] - S3 bucket '{bucket_name}' created successfully.")
             except ClientError as create_error:
                 print(f"Error creating bucket: {create_error}")
                 raise
@@ -52,7 +59,7 @@ def upload_dataframe_to_s3(s3_client, bucket_name, key, df):
         # Convert DataFrame to CSV format in memory
         csv_buffer = io.StringIO()
         df.to_csv(csv_buffer, index=False)
-        
+
         # Upload to S3
         s3_client.put_object(
             Bucket=bucket_name,
@@ -70,7 +77,7 @@ def upload_geojson_to_s3(s3_client, bucket_name, key, local_file_path):
     try:
         with open(local_file_path, 'r') as f:
             geojson_content = f.read()
-        
+
         s3_client.put_object(
             Bucket=bucket_name,
             Key=key,
