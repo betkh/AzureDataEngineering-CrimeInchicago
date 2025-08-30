@@ -4,11 +4,11 @@
 
 #### DataSource: Crimes In Chicago
 
-| Attribute                 | Details |
-| ------------------------- | ------- |
-| **Data Update Frequency** | `Daily` |
-| **Rows**                  | `8.19M` |
-| **Columns**               | `22`    |
+| Attribute           | Details |
+| ------------------- | ------- |
+| Ingestion Frequency | `Daily` |
+| Rows                | `8.19M` |
+| Columns             | `22`    |
 
 #### Links
 
