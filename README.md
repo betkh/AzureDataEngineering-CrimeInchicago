@@ -4,12 +4,15 @@
 
 ### DataSource: Crimes - 2001 to Present - Dynamic data
 
-| Attribute                 | Details                                                                                                                                                                                |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Dataset URL**           | [Crimes - 2001 to Present](https://catalog.data.gov/dataset/crimes-2001-to-present)                                                                                                    |
-| **About Data**            | [`https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data`](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data) |
-| **API Endpoint**          | [`https://data.cityofchicago.org/resource/ijzp-q8t2.json`](https://data.cityofchicago.org/resource/ijzp-q8t2.json)                                                                     |
-| **API Documentation**     | [`https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2`](https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2)                                                 |
-| **Data Update Frequency** | `Daily`                                                                                                                                                                                |
-| **Rows**                  | `8.19M` (each row represents a reported crime, anonymized to the block level)                                                                                                          |
-| **Columns**               | `22`                                                                                                                                                                                   |
+| Attribute                 | Details |
+| ------------------------- | ------- |
+| **Data Update Frequency** | `Daily` |
+| **Rows**                  | `8.19M` |
+| **Columns**               | `22`    |
+
+### Links
+
+- [`About the Data`](https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data)
+- [Crimes - 2001 to Present](https://catalog.data.gov/dataset/crimes-2001-to-present)
+- [`API Endpoint`](https://data.cityofchicago.org/resource/ijzp-q8t2.json)
+- [`API Documentation`](https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2)
