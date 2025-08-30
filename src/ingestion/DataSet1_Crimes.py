@@ -1,8 +1,8 @@
 
-from functions.setup import load_config, init_adls_directory, save_and_load_csv
+from functions.setup import load_config, init_s3_storage, save_and_load_csv
 from functions.pull_data import fetch_data_from_api1
 from functions.timeLabels import crimes_fileLabel2
-from functions.upload_ADLs import upload_dataframe_to_adls
+from functions.upload_s3 import upload_dataframe_to_s3
 
 
 def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
@@ -10,25 +10,13 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
                        COLUMN_FILTER=["case_number", "date", "primary_type", "description", "location_description",
                                       "arrest", "district", "community_area", "latitude", "longitude"],
                        # by default filters this years data only
-                       ROW_FILTER="(date>='2024-01-01T00:00:00' AND date<='2024-11-27T00:00:00')",
-                       STORAGE_ACCT="crimeinchicago",
-                       FILE_SYSTEM_NAME="input-ingested-raw",
-                       DIR_NAME="Crime2019_to_Present"):
+                       ROW_FILTER="(date>='2024-01-01T00:00:00' AND date<='2024-02-27T00:00:00')",
+                       AWS_REGION="us-east-1",
+                       S3_BUCKET_NAME="crimeinchicago-data",
+                       S3_PREFIX="input-ingested-raw/Crime2019_to_Present/"):
     """
-    Ingests the 'Crimes' dataset and uploads to Azure Data Lake Storage (ADLS).
+    Ingests the 'Crimes' dataset and uploads to AWS S3.
 
-    About Data:
-    Source #1: "Crimes - 2001 to Present" - (DYNAMIC source)
-
-        - About Data:	https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2/about_data
-        - API Endpoint:	https://data.cityofchicago.org/resource/ijzp-q8t2.json
-        - API Doc:	https://dev.socrata.com/foundry/data.cityofchicago.org/ijzp-q8t2
-        - Data Owner: 	Chicago Police Department
-        - Date Created:	September 30, 2011
-        - Data Update:  Frequency	Daily
-        - Rows: 8.19M (each row represents a reported crime, anonymized to the block level)
-        - Columns: 22
-        - data is too big 8.1M records X 22 columns, pulled only subset of rows and columns (year after 2020 and other filters)
     """
 
     print("DataSet1 ingestion - 'Crimes - 2001 to Present'")
@@ -83,24 +71,24 @@ def ingest_crimes_data(END_POINT="ijzp-q8t2.json",
                                     loaclSAVE_PATH,
                                     csv_file_label)
 
-        # Init Azure Data Lake storage client
-        with open("sas.config") as f:
-            sas_key = f.readline().strip()
+        # Load AWS credentials from config
+        config = load_config('aws_config.ini')
+        aws_access_key_id = config.get('DEFAULT', 'AWS_ACCESS_KEY_ID')
+        aws_secret_access_key = config.get('DEFAULT', 'AWS_SECRET_ACCESS_KEY')
+        aws_region = config.get('DEFAULT', 'AWS_REGION')
+        s3_bucket_name = config.get('DEFAULT', 'S3_BUCKET_NAME')
 
-        # storage account name
-        storageAcctName = STORAGE_ACCT
-        # name of continer for input data - names rules apply
-        Input_fileSysName = FILE_SYSTEM_NAME
-        # name of directory within a container
-        dirName = DIR_NAME
+        # Init AWS S3 client
+        s3_client = init_s3_storage(aws_access_key_id,
+                                    aws_secret_access_key,
+                                    aws_region,
+                                    s3_bucket_name)
 
-        directory = init_adls_directory(storageAcctName,
-                                        sas_key,
-                                        Input_fileSysName,
-                                        dirName)
+        # Create S3 key (file path in bucket)
+        s3_key = f"{S3_PREFIX}{csv_file_label}"
 
-        # Upload to ADLS
-        upload_dataframe_to_adls(directory, df_read, csv_file_label)
+        # Upload to S3
+        upload_dataframe_to_s3(s3_client, s3_bucket_name, s3_key, df_read)
 
 
 # Allow this script to be run independently or imported

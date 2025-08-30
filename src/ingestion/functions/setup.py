@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import configparser
 from .upload_ADLs import init_storage_acct
+from .upload_s3 import init_s3_client, create_s3_bucket_if_not_exists
 
 
 # Utility function to load configuration values
@@ -49,6 +50,32 @@ def init_adls_directory(storage_acct_name,
         directory = file_sys.get_directory_client(dir_name)
 
     return directory
+
+
+# Utility function to initialize AWS S3 client and bucket
+def init_s3_storage(aws_access_key_id,
+                    aws_secret_access_key,
+                    aws_region,
+                    bucket_name):
+    """
+    Initializes and returns an S3 client and ensures the bucket exists.
+
+    This function creates the specified S3 bucket if it doesn't already exist.
+
+    Parameters:
+    - aws_access_key_id (str): AWS access key ID for authentication.
+    - aws_secret_access_key (str): AWS secret access key for authentication.
+    - aws_region (str): AWS region where the bucket should be created.
+    - bucket_name (str): Name of the S3 bucket to create or access.
+
+    Returns:
+    - s3_client: The S3 client, which can be used for further file operations.
+    """
+
+    s3_client = init_s3_client(
+        aws_access_key_id, aws_secret_access_key, aws_region)
+    create_s3_bucket_if_not_exists(s3_client, bucket_name, aws_region)
+    return s3_client
 
 
 # Utility function to save DataFrame to CSV and load it for verification

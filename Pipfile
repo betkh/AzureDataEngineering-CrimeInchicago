@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "*"
 sodapy = "*"
 jupyter = "*"
 azure-storage-file-datalake = "*"
@@ -15,6 +14,8 @@ plotly = "*"
 folium = "*"
 geopandas = "*"
 matplotlib = "*"
+boto3 = "*"
+pandas = "*"
 
 [dev-packages]
 

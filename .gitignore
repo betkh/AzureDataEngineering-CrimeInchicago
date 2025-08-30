@@ -134,3 +134,6 @@ dmypy.json
 *.docx
 
 *.geojson
+
+
+aws_config.ini
